@@ -2150,27 +2150,6 @@
         <h3 class="section-title">Immediate Newborn Care</h3>
 
         <div class="field-row">
-          <label class="field-label">Delayed Cord Clamping</label>
-          <select class="field-select" id="na-dcc">
-            <option value="">-- Select --</option>
-            <option>Yes - greater than 60 seconds</option>
-            <option>Yes - until cord stopped pulsating</option>
-            <option>Early clamping - clinical indication</option>
-          </select>
-        </div>
-
-        <div class="field-row">
-          <label class="field-label">Skin to Skin</label>
-          <select class="field-select" id="na-sts">
-            <option value="">-- Select --</option>
-            <option>Immediate skin to skin achieved</option>
-            <option>Delayed skin to skin - clinical indication</option>
-            <option>Skin to skin with support person</option>
-            <option>Not achieved</option>
-          </select>
-        </div>
-
-        <div class="field-row">
           <label class="field-label">Resuscitation</label>
           <select class="field-select" id="na-resus">
             <option value="">-- Select --</option>
@@ -2193,7 +2172,7 @@
           />
         </div>
 
-        <!-- Newborn care checkboxes -->
+        <!-- Immediate newborn care checkboxes -->
         <div class="field-row">
           <label class="field-label">Newborn Care Completed</label>
           <div class="checkbox-group">
@@ -2202,31 +2181,75 @@
               Vitamin K 1mg IM administered
             </label>
             <label class="checkbox-label">
-              <input type="checkbox" id="na-nms" />
-              Newborn Metabolic Screen (NMS)
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="na-hearing" />
-              Newborn Hearing Screen (EHDI)
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="na-jaundice" />
-              Jaundice Screening (TCB/TSB)
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" id="na-cchd" />
-              CCHD Screen
+              <input type="checkbox" id="na-erythro" />
+              Erythromycin eye ointment applied
             </label>
           </div>
         </div>
 
+        <!-- DCC - dropdown since it's not just yes/no -->
         <div class="field-row">
-          <label class="field-label">Screening Details</label>
+          <label class="field-label">Delayed Cord Clamping</label>
+          <select class="field-select" id="na-dcc">
+            <option value="">-- Select --</option>
+            <option>Yes - greater than 60 seconds</option>
+            <option>Yes - until cord stopped pulsating</option>
+            <option>Early clamping - clinical indication</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">DCC Details</label>
           <input
             class="field-input"
             type="text"
-            id="na-screening-details"
-            placeholder="e.g. NMS sent, hearing screen passed bilaterally, TCB 142"
+            id="na-dcc-details"
+            placeholder="e.g. cord clamped at 2 minutes, or reason for early clamping"
+          />
+        </div>
+
+        <!-- Skin to skin -->
+        <div class="field-row">
+          <label class="field-label">Skin to Skin</label>
+          <select class="field-select" id="na-sts">
+            <option value="">-- Select --</option>
+            <option>Immediate skin to skin achieved</option>
+            <option>Delayed skin to skin - clinical indication</option>
+            <option>Skin to skin with support person</option>
+            <option>Not achieved</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Skin to Skin Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="na-sts-details"
+            placeholder="e.g. duration, timing, or reason if not achieved"
+          />
+        </div>
+
+        <!-- Breastfeeding initiation -->
+        <div class="field-row">
+          <label class="field-label">Breastfeeding Initiation</label>
+          <select class="field-select" id="na-bf-initiation">
+            <option value="">-- Select --</option>
+            <option>Initiated within first hour</option>
+            <option>Initiated after first hour</option>
+            <option>Not initiated - formula feeding</option>
+            <option>Not initiated - expressed breast milk planned</option>
+            <option>Not initiated - feeding plan being established</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Initiation Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="na-bf-details"
+            placeholder="e.g. latched well at breast within 20 minutes of birth"
           />
         </div>
       </section>
@@ -2244,13 +2267,13 @@
 
         <!-- Pre-populated textarea with normal newborn exam findings -->
         <!-- Edit directly in the field - text is real content not placeholder -->
-        <textarea class="template-area" id="na-exam">
-General: Well-appearing newborn, vigorous cry, no distress.
+        <!-- prettier-ignore -->
+        <textarea class="template-area" id="na-exam">General: Well-appearing newborn, vigorous cry, no distress.
 HEENT: Normocephalic. No caput or cephalohematoma.
-  Anterior fontanelle soft and flat. Sutures mobile.
-  Eyes: No subconjunctival hemorrhage.
-  Ears: Normal set and shape.
-  Oropharynx: Palate intact. No cleft. Tongue normal.
+Anterior fontanelle soft and flat. Sutures mobile.
+Eyes: No subconjunctival hemorrhage.
+Ears: Normal set and shape.
+Oropharynx: Palate intact. No cleft. Tongue normal.
 Neck: Supple, no masses, normal range of motion. Clavicles palpate intact.
 Chest: Equal rise bilaterally. No retractions.
 CVS: Normal S1 S2. No murmur. Femoral and brachial pulses palpable bilaterally.
@@ -2258,11 +2281,10 @@ Resp: Clear to auscultation bilaterally. No adventitious sounds.
 Abdomen: Soft, non-distended, with normal bowel sounds. No organomegaly. Cord intact.
 GU: Normal [male/female] genitalia. [Testes descended bilaterally.]
 MSK: Full range of motion all limbs. No fractures appreciated or suspected.
-  Hips: Negative Barlow and Ortolani bilaterally.
-  Spine: Straight. No sacral dimple.
+Hips: Negative Barlow and Ortolani bilaterally.
+Spine: Straight. No sacral dimple.
 Neuro: Normal tone. Moro, grasp, and suck reflexes present.
-Skin: Pink, well-perfused. No rashes or birthmarks.</textarea
-        >
+Skin: Pink, well-perfused. No rashes or birthmarks.</textarea>
       </section>
 
       <!-- ===== FEEDING ===== -->

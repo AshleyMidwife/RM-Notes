@@ -820,14 +820,11 @@ function copyNewbornAdmission() {
     return el && el.checked;
   }
 
-  // Build newborn care completed list from checkboxes
+  // Build immediate newborn care list from checkboxes
   const newbornCare =
     [
       checked("na-vitk") && "Vitamin K 1mg IM administered",
-      checked("na-nms") && "Newborn Metabolic Screen (NMS)",
-      checked("na-hearing") && "Newborn Hearing Screen (EHDI)",
-      checked("na-jaundice") && "Jaundice Screening (TCB/TSB)",
-      checked("na-cchd") && "CCHD Screen"
+      checked("na-erythro") && "Erythromycin eye ointment applied"
     ]
       .filter(Boolean)
       .join("\n- ") || "Not documented";
@@ -858,11 +855,12 @@ ROM to Delivery: ${val("na-rom-duration")}
 Maternal Medications: ${val("na-meds")}
 
 IMMEDIATE NEWBORN CARE
-Delayed Cord Clamping: ${val("na-dcc")}
-Skin to Skin: ${val("na-sts")}
+Newborn Care Completed: 
+- ${newbornCare}
+Delayed Cord Clamping: ${val("na-dcc")}${val("na-dcc-details") !== "___" ? " - " + val("na-dcc-details") : ""}
+Skin to Skin: ${val("na-sts")}${val("na-sts-details") !== "___" ? " - " + val("na-sts-details") : ""}
+Breastfeeding Initiation: ${val("na-bf-initiation")}${val("na-bf-details") !== "___" ? " - " + val("na-bf-details") : ""}
 Resuscitation: ${val("na-resus")}${val("na-resus-details") !== "___" ? " - " + val("na-resus-details") : ""}
-Newborn Care Completed:
-- ${newbornCare}${val("na-screening-details") !== "___" ? "\nScreening Details: " + val("na-screening-details") : ""}
 
 PHYSICAL EXAMINATION
 Vitals: ${val("na-vitals")}
