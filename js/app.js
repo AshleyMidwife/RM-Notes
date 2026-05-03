@@ -666,3 +666,140 @@ function clearDeliveryNote() {
     btn.classList.remove("confirming");
   }
 }
+
+// ===== MATERNAL DISCHARGE SUMMARY =====
+
+// copyMaternalDischarge() - assembles all maternal discharge fields
+// into a clean formatted note and copies to clipboard
+function copyMaternalDischarge() {
+  // Same helper as other notes
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  // Helper for checkboxes
+  function checked(id) {
+    const el = document.getElementById(id);
+    return el && el.checked;
+  }
+
+  // Build discharge teaching list from checkboxes
+  // Only includes topics that were checked
+  const teachingTopics =
+    [
+      checked("md-teach-fever") && "Fever/signs of infection",
+      checked("md-teach-bleeding") && "Excessive bleeding/clots",
+      checked("md-teach-headache") && "Headache/visual changes/epigastric pain",
+      checked("md-teach-dvt") && "DVT signs",
+      checked("md-teach-perineum") && "Perineal care and wound healing",
+      checked("md-teach-feeding") && "Feeding support and resources",
+      checked("md-teach-mood") && "Mood changes/baby blues/PPD",
+      checked("md-teach-activity") && "Activity restrictions and return to exercise",
+      checked("md-teach-contraception") && "Contraception counselling",
+      checked("md-teach-emergency") && "When to seek emergency care",
+      val("md-teach-other") !== "___" && val("md-teach-other")
+    ]
+      .filter(Boolean)
+      .join("\n- ") || "Not documented";
+
+  const note = `MATERNAL DISCHARGE SUMMARY
+${"=".repeat(40)}
+
+IDENTIFICATION
+Patient: ${val("md-name")}
+Gravida/Para: ${val("md-gp")}
+Gestational Age at Delivery: ${val("md-ga")}
+Date of Delivery: ${val("md-dod")}
+Day Postpartum: ${val("md-day-pp")}
+
+DELIVERY SUMMARY
+Mode of Delivery: ${val("md-mode")}
+Complications: ${val("md-complications")}
+GBS Status: ${val("md-gbs")}
+ABO/Rh: ${val("md-abo")}
+
+VITALS AT DISCHARGE
+BP: ${val("md-bp")} | HR: ${val("md-hr")} | Temp: ${val("md-temp")}
+
+POSTPARTUM ASSESSMENT (BUBBLE-HEADS)
+B - Breasts: ${val("md-breasts")}${val("md-breasts-details") !== "___" ? " - " + val("md-breasts-details") : ""}
+  Feeding: ${val("md-feeding")}
+U - Uterus: ${val("md-uterus")}
+B - Bowels: ${val("md-bowels")}
+B - Bladder: ${val("md-bladder")}
+L - Lochia: ${val("md-lochia")}
+E - Epis/Laceration: ${val("md-perineum")}${val("md-perineum-details") !== "___" ? " - " + val("md-perineum-details") : ""}
+H - Homans/DVT: ${val("md-homans")}${val("md-homans-details") !== "___" ? " - " + val("md-homans-details") : ""}
+E - Emotions: ${val("md-emotions")}${val("md-emotions-details") !== "___" ? " - " + val("md-emotions-details") : ""}
+A - Affect: ${val("md-affect")}
+D - Diet: ${val("md-diet")}
+S - Support: ${val("md-support")}
+
+DISCHARGE TEACHING
+Topics covered:
+- ${teachingTopics}
+
+PLAN & FOLLOW UP
+Disposition: ${val("md-disposition")}
+Follow Up: ${val("md-followup")}${val("md-consulting") !== "___" ? "\nConsulting Provider: " + val("md-consulting") : ""}
+Informed Choice: ${val("md-informed-choice")}
+${val("md-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("md-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-maternal-discharge .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearMaternalDischarge() - two-tap clear pattern
+let clearMaternalDischargePending = false;
+
+function clearMaternalDischarge() {
+  const btn = document.getElementById("maternal-discharge-clear-btn");
+
+  if (!clearMaternalDischargePending) {
+    clearMaternalDischargePending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearMaternalDischargePending) {
+        clearMaternalDischargePending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearMaternalDischargePending = false;
+
+    const inputs = document.querySelectorAll("#screen-maternal-discharge .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-maternal-discharge .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-maternal-discharge .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    const checkboxes = document.querySelectorAll("#screen-maternal-discharge input[type='checkbox']");
+    checkboxes.forEach((cb) => (cb.checked = false));
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}

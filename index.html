@@ -1617,13 +1617,388 @@
       <button class="copy-btn" onclick="copyDeliveryNote()">Copy Note to Clipboard</button>
     </main>
 
-    <!-- MATERNAL DISCHARGE -->
+    <!-- MATERNAL DISCHARGE SUMMARY -->
     <main id="screen-maternal-discharge" class="screen">
       <h2 class="screen-title">Maternal Discharge Summary</h2>
-      <textarea class="template-area" id="text-maternal-discharge">
-[MATERNAL DISCHARGE SUMMARY - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-maternal-discharge')">Copy to Clipboard</button>
+
+      <!-- ===== IDENTIFICATION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Identification</h3>
+
+        <div class="field-row">
+          <label class="field-label">Patient Name</label>
+          <input class="field-input" type="text" id="md-name" placeholder="Patient name" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gravida/Para</label>
+          <input class="field-input" type="text" id="md-gp" placeholder="e.g. G2P2" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age at Delivery</label>
+          <input class="field-input" type="text" id="md-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Date of Delivery</label>
+          <input class="field-input" type="text" id="md-dod" placeholder="e.g. 2026-05-01" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Day Postpartum</label>
+          <input class="field-input" type="text" id="md-day-pp" placeholder="e.g. Day 1" />
+        </div>
+      </section>
+
+      <!-- ===== DELIVERY SUMMARY ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Delivery Summary</h3>
+
+        <div class="field-row">
+          <label class="field-label">Mode of Delivery</label>
+          <select class="field-select" id="md-mode">
+            <option value="">-- Select --</option>
+            <option>Spontaneous vaginal delivery</option>
+            <option>Assisted vaginal delivery - vacuum</option>
+            <option>Assisted vaginal delivery - forceps</option>
+            <option>Caesarean section - emergency</option>
+            <option>Caesarean section - elective</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Complications</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-complications"
+            placeholder="e.g. None, or PPH, shoulder dystocia"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Status</label>
+          <select class="field-select" id="md-gbs">
+            <option value="">-- Select --</option>
+            <option>Negative</option>
+            <option>Positive</option>
+            <option>Unknown</option>
+            <option>Pending</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">ABO/Rh</label>
+          <input class="field-input" type="text" id="md-abo" placeholder="e.g. O+" />
+        </div>
+      </section>
+
+      <!-- ===== POSTPARTUM ASSESSMENT - BUBBLE-HEADS ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Postpartum Assessment</h3>
+        <p class="section-subtitle-small">BUBBLE-HEADS</p>
+
+        <!-- B - Breasts -->
+        <div class="field-row">
+          <label class="field-label">B — Breasts</label>
+          <select class="field-select" id="md-breasts">
+            <option value="">-- Select --</option>
+            <option>Soft, no engorgement</option>
+            <option>Filling, no concerns</option>
+            <option>Engorged - management initiated</option>
+            <option>Nipple concerns - see details</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Feeding</label>
+          <select class="field-select" id="md-feeding">
+            <option value="">-- Select --</option>
+            <option>Breastfeeding established, latch good</option>
+            <option>Breastfeeding established, latch being supported</option>
+            <option>Formula feeding</option>
+            <option>Combination feeding</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Breast Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-breasts-details"
+            placeholder="Any additional breast/feeding details"
+          />
+        </div>
+
+        <!-- U - Uterus -->
+        <div class="field-row">
+          <label class="field-label">U — Uterus</label>
+          <input class="field-input" type="text" id="md-uterus" placeholder="e.g. Fundus firm at umbilicus, midline" />
+        </div>
+
+        <!-- B - Bowels -->
+        <div class="field-row">
+          <label class="field-label">B — Bowels</label>
+          <select class="field-select" id="md-bowels">
+            <option value="">-- Select --</option>
+            <option>Flatus present, no BM yet - normal</option>
+            <option>BM achieved</option>
+            <option>Constipation - management initiated</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+
+        <!-- B - Bladder -->
+        <div class="field-row">
+          <label class="field-label">B — Bladder</label>
+          <select class="field-select" id="md-bladder">
+            <option value="">-- Select --</option>
+            <option>Voiding well, no concerns</option>
+            <option>First void achieved post-delivery</option>
+            <option>Difficulty voiding - management initiated</option>
+            <option>Urinary retention - catheterized</option>
+          </select>
+        </div>
+
+        <!-- L - Lochia -->
+        <div class="field-row">
+          <label class="field-label">L — Lochia</label>
+          <select class="field-select" id="md-lochia">
+            <option value="">-- Select --</option>
+            <option>Rubra, moderate, no clots</option>
+            <option>Rubra, light, no clots</option>
+            <option>Rubra, heavy - monitoring</option>
+            <option>Clots present - assessed, no concern</option>
+            <option>Clots present - management initiated</option>
+          </select>
+        </div>
+
+        <!-- E - Epis/Laceration -->
+        <div class="field-row">
+          <label class="field-label">E — Epis/Laceration</label>
+          <select class="field-select" id="md-perineum">
+            <option value="">-- Select --</option>
+            <option>Intact perineum, no concerns</option>
+            <option>Laceration/repair - healing well, edges approximated</option>
+            <option>Laceration/repair - concerns noted, see details</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Perineum Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-perineum-details"
+            placeholder="e.g. Mild edema, ice applied, comfortable"
+          />
+        </div>
+
+        <!-- H - Homans -->
+        <div class="field-row">
+          <label class="field-label">H — Homans/DVT Screen</label>
+          <select class="field-select" id="md-homans">
+            <option value="">-- Select --</option>
+            <option>Negative - no calf tenderness or edema</option>
+            <option>Abnormal - see details</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">DVT Details</label>
+          <input class="field-input" type="text" id="md-homans-details" placeholder="Details if abnormal" />
+        </div>
+
+        <!-- E - Emotions -->
+        <div class="field-row">
+          <label class="field-label">E — Emotions</label>
+          <select class="field-select" id="md-emotions">
+            <option value="">-- Select --</option>
+            <option>Mood good, adjusting well</option>
+            <option>Tearful but coping - normal postpartum adjustment discussed</option>
+            <option>Concerns identified - follow up planned</option>
+            <option>Referred for further support</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Emotional Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-emotions-details"
+            placeholder="Any additional emotional/mental health details"
+          />
+        </div>
+
+        <!-- A - Affect -->
+        <div class="field-row">
+          <label class="field-label">A — Affect</label>
+          <select class="field-select" id="md-affect">
+            <option value="">-- Select --</option>
+            <option>Affect appropriate and congruent</option>
+            <option>Affect incongruent with reported mood - follow up planned</option>
+          </select>
+        </div>
+
+        <!-- D - Diet -->
+        <div class="field-row">
+          <label class="field-label">D — Diet</label>
+          <select class="field-select" id="md-diet">
+            <option value="">-- Select --</option>
+            <option>Tolerating diet well, good appetite</option>
+            <option>Poor appetite - monitored</option>
+            <option>Nausea/vomiting - management initiated</option>
+          </select>
+        </div>
+
+        <!-- S - Support -->
+        <div class="field-row">
+          <label class="field-label">S — Support</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-support"
+            placeholder="e.g. Partner and family present, good support network at home"
+          />
+        </div>
+      </section>
+
+      <!-- ===== VITALS ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Vitals at Discharge</h3>
+
+        <div class="field-row">
+          <label class="field-label">BP</label>
+          <input class="field-input" type="text" id="md-bp" placeholder="e.g. 118/72" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">HR</label>
+          <input class="field-input" type="text" id="md-hr" placeholder="e.g. 76" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Temp</label>
+          <input class="field-input" type="text" id="md-temp" placeholder="e.g. 36.8" />
+        </div>
+      </section>
+
+      <!-- ===== DISCHARGE TEACHING ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Discharge Teaching</h3>
+        <p class="section-subtitle-small">Document topics covered</p>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-fever" />
+            Fever / signs of infection
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-bleeding" />
+            Excessive bleeding / clots
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-headache" />
+            Headache / visual changes / epigastric pain
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-dvt" />
+            DVT signs - calf pain, swelling
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-perineum" />
+            Perineal care and wound healing
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-feeding" />
+            Feeding support and resources
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-mood" />
+            Mood changes / baby blues / PPD
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-activity" />
+            Activity restrictions and return to exercise
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-contraception" />
+            Contraception counselling
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="md-teach-emergency" />
+            When to seek emergency care
+          </label>
+        </div>
+
+        <div class="field-row" style="margin-top: 12px">
+          <label class="field-label">Additional Teaching</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-teach-other"
+            placeholder="Any additional teaching topics covered"
+          />
+        </div>
+      </section>
+
+      <!-- ===== PLAN & FOLLOW UP ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Plan & Follow Up</h3>
+
+        <div class="field-row">
+          <label class="field-label">Disposition</label>
+          <select class="field-select" id="md-disposition">
+            <option value="">-- Select --</option>
+            <option>Direct discharge home under midwifery care</option>
+            <option>Admitted to postpartum unit prior to discharge</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Follow Up</label>
+          <input
+            class="field-input"
+            type="text"
+            id="md-followup"
+            placeholder="e.g. Midwifery visit in 24-48h, then prn to 6 weeks"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Consulting Provider</label>
+          <input class="field-input" type="text" id="md-consulting" placeholder="e.g. Reviewed with Dr. ___ or N/A" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Informed Choice Discussion</label>
+          <textarea
+            class="field-textarea"
+            id="md-informed-choice"
+            placeholder="e.g. Discharge plan discussed, questions answered, agreeable to follow up."
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="md-other-notes"
+            placeholder="Any additional clinical details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="maternal-discharge-clear-btn" onclick="clearMaternalDischarge()">Clear All</button>
+      <button class="copy-btn" onclick="copyMaternalDischarge()">Copy Note to Clipboard</button>
     </main>
 
     <!-- NEWBORN ADMISSION -->

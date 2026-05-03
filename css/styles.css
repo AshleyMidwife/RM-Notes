@@ -479,3 +479,11 @@ body {
     gap: 8px;
   }
 }
+
+/* Small subtitle inside a section - used for BUBBLE-HEADS label */
+.section-subtitle-small {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
