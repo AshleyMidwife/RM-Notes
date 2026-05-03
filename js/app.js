@@ -1130,3 +1130,194 @@ function clearNewbornDischarge() {
     btn.classList.remove("confirming");
   }
 }
+
+// ===== PERINEAL REPAIR =====
+
+// copyPerinealRepair() - assembles perineal repair fields
+// into a clean formatted note and copies to clipboard
+function copyPerinealRepair() {
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  function checked(id) {
+    const el = document.getElementById(id);
+    return el && el.checked;
+  }
+
+  // Build post repair care list from checkboxes
+  const postCare =
+    [
+      checked("pr-sponge-bath") && "Sponge bath to area",
+      checked("pr-ice") && "Ice pad applied",
+      checked("pr-pads") && "Clean pads applied",
+      checked("pr-education") && "Education provided re wound aftercare"
+    ]
+      .filter(Boolean)
+      .join("\n- ") || "Not documented";
+
+  const note = `PERINEAL REPAIR NOTE
+${"=".repeat(40)}
+
+REPAIR DETAILS
+Type: ${val("pr-type")}
+Repaired By: ${val("pr-provider")}
+Anaesthetic: ${val("pr-anaesthetic")}
+Suture Material: ${val("pr-suture")}
+Technique: ${val("pr-technique")}
+Haemostasis: ${val("pr-haemostasis")}
+Alignment: ${val("pr-alignment")}
+Tolerance: ${val("pr-tolerance")}${val("pr-details") !== "___" ? "\nAdditional Details: " + val("pr-details") : ""}
+
+POST REPAIR CARE
+- ${postCare}
+${val("pr-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("pr-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-perineal .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearPerinealRepair() - two-tap clear pattern
+let clearPerinealPending = false;
+
+function clearPerinealRepair() {
+  const btn = document.getElementById("perineal-clear-btn");
+
+  if (!clearPerinealPending) {
+    clearPerinealPending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearPerinealPending) {
+        clearPerinealPending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearPerinealPending = false;
+
+    const inputs = document.querySelectorAll("#screen-perineal .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-perineal .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-perineal .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    const checkboxes = document.querySelectorAll("#screen-perineal input[type='checkbox']");
+    checkboxes.forEach((cb) => (cb.checked = false));
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}
+
+// ===== TRANSFER OF CARE TO OB =====
+
+// copyTransferNote() - assembles transfer of care fields
+// into a clean formatted note and copies to clipboard
+function copyTransferNote() {
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  const note = `TRANSFER OF CARE TO OBSTETRICS
+${"=".repeat(40)}
+
+TRANSFER DETAILS
+Patient: ${val("tc-name")}
+Gravida/Para: ${val("tc-gp")}
+Gestational Age: ${val("tc-ga")}
+Time of Transfer: ${val("tc-time")}
+Reason for Transfer: ${val("tc-reason")}${val("tc-reason-details") !== "___" ? " - " + val("tc-reason-details") : ""}
+Receiving OB: ${val("tc-ob")}
+Care Accepted By: ${val("tc-accepted-by")}
+PCN Assigned: ${val("tc-pcn")}
+
+CLINICAL STATUS AT TRANSFER
+Maternal Vitals: ${val("tc-vitals")}
+Fetal Status: ${val("tc-fetal-status")}
+Cervical Exam: ${val("tc-cx")}
+Clinical Summary: ${val("tc-summary")}
+
+MIDWIFERY ROLE POST TRANSFER
+${val("tc-rm-role")}
+${val("tc-handover")}
+Informed Choice: ${val("tc-informed-choice")}
+${val("tc-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("tc-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-transfer .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearTransferNote() - two-tap clear pattern
+let clearTransferPending = false;
+
+function clearTransferNote() {
+  const btn = document.getElementById("transfer-clear-btn");
+
+  if (!clearTransferPending) {
+    clearTransferPending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearTransferPending) {
+        clearTransferPending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearTransferPending = false;
+
+    const inputs = document.querySelectorAll("#screen-transfer .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-transfer .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-transfer .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}
