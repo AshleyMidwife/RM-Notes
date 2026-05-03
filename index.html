@@ -86,14 +86,486 @@
          - template-content holds the note text
          - copy button at bottom sends text to clipboard -->
 
-    <!-- TRIAGE & ADMISSION -->
+    <!-- TRIAGE & ADMISSION NOTE -->
     <main id="screen-triage" class="screen">
       <h2 class="screen-title">Triage & Admission Note</h2>
-      <!-- Template text lives in a textarea so it's editable before copying -->
-      <textarea class="template-area" id="text-triage">
-[TRIAGE & ADMISSION NOTE - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-triage')">Copy to Clipboard</button>
+
+      <!-- ===== ID SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Identification</h3>
+
+        <!-- Free text fields for patient identifiers -->
+        <div class="field-row">
+          <label class="field-label">Name</label>
+          <input class="field-input" type="text" id="t-name" placeholder="Patient name" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Age</label>
+          <input class="field-input" type="text" id="t-age" placeholder="e.g. 28" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gravida/Para</label>
+          <input class="field-input" type="text" id="t-gp" placeholder="e.g. G2P1" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age</label>
+          <input class="field-input" type="text" id="t-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <!-- Dropdown for chief complaint -->
+        <div class="field-row">
+          <label class="field-label">Chief Complaint</label>
+          <select class="field-select" id="t-cc">
+            <option value="">-- Select --</option>
+            <option>Contractions</option>
+            <option>Possible rupture of membranes</option>
+            <option>Decreased fetal movement</option>
+            <option>Vaginal bleeding</option>
+            <option>Scheduled induction</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Other/Details</label>
+          <input class="field-input" type="text" id="t-cc-other" placeholder="Additional details" />
+        </div>
+      </section>
+
+      <!-- ===== PRENATAL LABS SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Prenatal Labs</h3>
+
+        <!-- Free text for all labs - transcribed from paper chart -->
+        <div class="field-row">
+          <label class="field-label">ABO/Rh</label>
+          <input class="field-input" type="text" id="t-abo" placeholder="e.g. A+" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Antibody Screen</label>
+          <input class="field-input" type="text" id="t-abs" placeholder="e.g. Negative" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS</label>
+          <input class="field-input" type="text" id="t-gbs" placeholder="e.g. Negative" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GDM Screen</label>
+          <input class="field-input" type="text" id="t-gdm" placeholder="e.g. Normal" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Rubella</label>
+          <input class="field-input" type="text" id="t-rubella" placeholder="e.g. Immune" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Varicella</label>
+          <input class="field-input" type="text" id="t-varicella" placeholder="e.g. Immune" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">HBsAg</label>
+          <input class="field-input" type="text" id="t-hbsag" placeholder="e.g. Negative" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">HIV</label>
+          <input class="field-input" type="text" id="t-hiv" placeholder="e.g. Negative" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">HCV</label>
+          <input class="field-input" type="text" id="t-hcv" placeholder="e.g. Negative" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Syphilis</label>
+          <input class="field-input" type="text" id="t-syph" placeholder="e.g. Non-reactive" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Hgb</label>
+          <input class="field-input" type="text" id="t-hgb" placeholder="e.g. 118" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Platelets</label>
+          <input class="field-input" type="text" id="t-plt" placeholder="e.g. 210" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Other Labs</label>
+          <input class="field-input" type="text" id="t-labs-other" placeholder="Any additional labs" />
+        </div>
+      </section>
+
+      <!-- ===== HPI SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">History of Present Illness</h3>
+
+        <div class="field-row">
+          <label class="field-label">Contractions</label>
+          <select class="field-select" id="t-ctx">
+            <option value="">-- Select --</option>
+            <option>Not currently contracting</option>
+            <option>Irregular/prodromal</option>
+            <option>Regular, mild</option>
+            <option>Regular, moderate-strong</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Contraction Details</label>
+          <input class="field-input" type="text" id="t-ctx-details" placeholder="e.g. q5min x 60sec x 2hrs" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Rupture of Membranes</label>
+          <select class="field-select" id="t-rom">
+            <option value="">-- Select --</option>
+            <option>Intact</option>
+            <option>Confirmed rupture</option>
+            <option>Possible/uncertain rupture</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">ROM Details</label>
+          <input class="field-input" type="text" id="t-rom-details" placeholder="e.g. time, colour, amount" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Vaginal Bleeding</label>
+          <select class="field-select" id="t-bleeding">
+            <option value="">-- Select --</option>
+            <option>None</option>
+            <option>Bloody show</option>
+            <option>Light bleeding</option>
+            <option>Moderate bleeding</option>
+            <option>Heavy bleeding</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Fetal Movement</label>
+          <select class="field-select" id="t-fm">
+            <option value="">-- Select --</option>
+            <option>Normal/present</option>
+            <option>Reduced</option>
+            <option>Absent</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Other HPI</label>
+          <input class="field-input" type="text" id="t-hpi-other" placeholder="Any other presenting concerns" />
+        </div>
+      </section>
+
+      <!-- ===== CURRENT PREGNANCY SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Current Pregnancy</h3>
+
+        <div class="field-row">
+          <label class="field-label">Complications</label>
+          <input class="field-input" type="text" id="t-complications" placeholder="e.g. GDM, PIH, or None" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Dating Ultrasound</label>
+          <input class="field-input" type="text" id="t-dating-us" placeholder="e.g. T1 US concordant" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">FTS/Anatomy/Growth US</label>
+          <input class="field-input" type="text" id="t-other-us" placeholder="e.g. Normal anatomy, anterior placenta" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Recent BPP</label>
+          <input class="field-input" type="text" id="t-bpp" placeholder="e.g. 8/8 at 38w0d, or N/A" />
+        </div>
+      </section>
+
+      <!-- ===== HISTORY SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">History</h3>
+
+        <div class="field-row">
+          <label class="field-label">Past Obstetrical History</label>
+          <input class="field-input" type="text" id="t-obhx" placeholder="e.g. SVD x1, no complications" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Medical History</label>
+          <input class="field-input" type="text" id="t-pmhx" placeholder="e.g. Nil significant" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Surgical History</label>
+          <input class="field-input" type="text" id="t-pshx" placeholder="e.g. Nil significant" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Medications</label>
+          <input class="field-input" type="text" id="t-meds" placeholder="e.g. PNV, iron, or None" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Allergies</label>
+          <input class="field-input" type="text" id="t-allergies" placeholder="e.g. NKDA" />
+        </div>
+      </section>
+
+      <!-- ===== PHYSICAL EXAMINATION SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Physical Examination</h3>
+
+        <div class="field-row">
+          <label class="field-label">BP</label>
+          <input class="field-input" type="text" id="t-bp" placeholder="e.g. 118/72" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">HR</label>
+          <input class="field-input" type="text" id="t-hr" placeholder="e.g. 82" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Temp</label>
+          <input class="field-input" type="text" id="t-temp" placeholder="e.g. 36.8" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">SpO2</label>
+          <input class="field-input" type="text" id="t-spo2" placeholder="e.g. 99%" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Leopold's</label>
+          <input class="field-input" type="text" id="t-leopolds" placeholder="e.g. Cephalic, LOA" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Contractions</label>
+          <input
+            class="field-input"
+            type="text"
+            id="t-ctx-exam"
+            placeholder="e.g. 3 in 10 min, moderate by palpation"
+          />
+        </div>
+
+        <!-- FHR Baseline always shows regardless of monitoring type -->
+        <div class="field-row">
+          <label class="field-label">FHR Baseline</label>
+          <input class="field-input" type="text" id="t-fhr" placeholder="e.g. 140 bpm" />
+        </div>
+
+        <!-- Toggle between IA (default) and cEFM -->
+        <!-- The segmented-control class matches the RM Tools toggle style -->
+        <div class="field-row">
+          <label class="field-label">Monitoring Type</label>
+          <div class="segmented-control">
+            <!-- IA is default - starts with active class -->
+            <button class="segment active" id="t-monitor-ia" onclick="setMonitoringType('ia')">IA</button>
+            <button class="segment" id="t-monitor-cefm" onclick="setMonitoringType('cefm')">cEFM</button>
+          </div>
+        </div>
+
+        <!-- IA FIELDS - visible by default -->
+        <div id="t-ia-fields">
+          <div class="field-row">
+            <label class="field-label">Rhythm</label>
+            <select class="field-select" id="t-rhythm">
+              <option value="">-- Select --</option>
+              <option>Regular</option>
+              <option>Irregular</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Accelerations</label>
+            <select class="field-select" id="t-ia-accels">
+              <option value="">-- Select --</option>
+              <option>Heard</option>
+              <option>Not heard</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Decelerations</label>
+            <select class="field-select" id="t-ia-decels">
+              <option value="">-- Select --</option>
+              <option>Not heard</option>
+              <option>Heard</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Classification</label>
+            <select class="field-select" id="t-ia-class">
+              <option value="">-- Select --</option>
+              <option>Normal</option>
+              <option>Abnormal</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- cEFM FIELDS - hidden by default -->
+        <!-- style="display:none" hides this until cEFM is selected -->
+        <div id="t-cefm-fields" style="display: none">
+          <div class="field-row">
+            <label class="field-label">Variability</label>
+            <select class="field-select" id="t-variability">
+              <option value="">-- Select --</option>
+              <option>Absent</option>
+              <option>Minimal</option>
+              <option>Moderate</option>
+              <option>Marked</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Accelerations</label>
+            <select class="field-select" id="t-accels">
+              <option value="">-- Select --</option>
+              <option>Present</option>
+              <option>Absent</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Decelerations</label>
+            <select class="field-select" id="t-decels">
+              <option value="">-- Select --</option>
+              <option>Absent</option>
+              <option>Early decelerations</option>
+              <option>Variable decelerations</option>
+              <option>Late decelerations</option>
+              <option>Prolonged deceleration</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Classification</label>
+            <select class="field-select" id="t-fhr-class">
+              <option value="">-- Select --</option>
+              <option>Normal</option>
+              <option>Atypical</option>
+              <option>Abnormal</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CERVICAL EXAM SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Cervical Exam</h3>
+
+        <div class="field-row">
+          <label class="field-label">Cervical Dilation</label>
+          <input class="field-input" type="text" id="t-dilation" placeholder="e.g. 4 cm" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Effacement</label>
+          <input class="field-input" type="text" id="t-effacement" placeholder="e.g. 80%" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Station</label>
+          <input class="field-input" type="text" id="t-station" placeholder="e.g. -1" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Position</label>
+          <select class="field-select" id="t-position">
+            <option value="">-- Select --</option>
+            <option>Anterior</option>
+            <option>Mid</option>
+            <option>Posterior</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Consistency</label>
+          <select class="field-select" id="t-consistency">
+            <option value="">-- Select --</option>
+            <option>Soft</option>
+            <option>Medium</option>
+            <option>Firm</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Membranes</label>
+          <select class="field-select" id="t-membranes">
+            <option value="">-- Select --</option>
+            <option>Intact</option>
+            <option>Ruptured - clear fluid</option>
+            <option>Ruptured - bloody fluid</option>
+            <option>Ruptured - meconium stained</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Other Exam Findings</label>
+          <input class="field-input" type="text" id="t-exam-other" placeholder="e.g. Reflexes normal, no edema" />
+        </div>
+      </section>
+
+      <!-- ===== IMPRESSION & PLAN SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Impression & Plan</h3>
+
+        <div class="field-row">
+          <label class="field-label">Labour State</label>
+          <select class="field-select" id="t-labour-state">
+            <option value="">-- Select --</option>
+            <option>Not in labour</option>
+            <option>Latent/early labour</option>
+            <option>Active labour</option>
+            <option>Advanced active labour</option>
+            <option>Second stage</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Plan</label>
+          <textarea class="field-textarea" id="t-plan" placeholder="Document your plan here..."></textarea>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Informed Choice Discussion</label>
+          <input
+            class="field-input"
+            type="text"
+            id="t-informed-choice"
+            placeholder="e.g. Risks, benefits, alternatives discussed. All questions answered."
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Consulting Midwife/Provider</label>
+          <input class="field-input" type="text" id="t-consulting" placeholder="e.g. Reviewed with RM ___ / Dr ___" />
+        </div>
+      </section>
+
+      <!-- Copy button - assembles all fields into a formatted note and copies -->
+      <button class="clear-btn" id="triage-clear-btn" onclick="clearTriageNote()">Clear All</button>
+      <button class="copy-btn" onclick="copyTriageNote()">Copy Note to Clipboard</button>
     </main>
 
     <!-- LABOUR PROGRESS NOTE -->
