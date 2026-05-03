@@ -549,12 +549,11 @@
 
         <div class="field-row">
           <label class="field-label">Informed Choice Discussion</label>
-          <input
-            class="field-input"
-            type="text"
+          <textarea
+            class="field-textarea"
             id="t-informed-choice"
             placeholder="e.g. Risks, benefits, alternatives discussed. All questions answered."
-          />
+          ></textarea>
         </div>
 
         <div class="field-row">
@@ -563,8 +562,21 @@
         </div>
       </section>
 
-      <!-- Copy button - assembles all fields into a formatted note and copies -->
+      <!-- ===== OTHER NOTES SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="t-other-notes"
+            placeholder="Any additional clinical details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
       <button class="clear-btn" id="triage-clear-btn" onclick="clearTriageNote()">Clear All</button>
+      <!-- Copy button - assembles all fields into a formatted note and copies -->
       <button class="copy-btn" onclick="copyTriageNote()">Copy Note to Clipboard</button>
     </main>
 
