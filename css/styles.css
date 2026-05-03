@@ -199,3 +199,207 @@ body {
     font-size: 1rem;
   }
 }
+
+/* ===== FORM FIELDS ===== */
+/* These styles apply to all the labeled input fields
+   and dropdowns inside the note templates */
+
+/* Each field row contains a label and an input side by side */
+.note-section {
+  background-color: #2a2a3e;
+  border: 1px solid #3a3a5c;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Section title - amber, slightly smaller than screen title */
+.section-title {
+  color: #f59e0b;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  /* Subtle line under section title to separate from fields */
+  border-bottom: 1px solid #3a3a5c;
+}
+
+/* Each row is a label + input pair */
+.field-row {
+  display: flex;
+  flex-direction: column; /* Stack label above input on mobile */
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+/* Remove bottom margin from last field in a section */
+.field-row:last-child {
+  margin-bottom: 0;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94a3b8; /* Secondary text colour - subtler than input text */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Shared styles for both text inputs and selects */
+.field-input,
+.field-select {
+  background-color: #1e1e2e; /* Darker than card background to show depth */
+  border: 1px solid #3a3a5c;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  width: 100%;
+  /* Smooth border colour transition on focus */
+  transition: border-color 0.2s;
+}
+
+.field-input:focus,
+.field-select:focus {
+  outline: none;
+  border-color: #f59e0b; /* Amber border when actively editing */
+}
+
+/* Placeholder text is subtler than entered text */
+.field-input::placeholder {
+  color: #3a3a5c;
+}
+
+/* Select dropdowns need some extra styling to look consistent
+   across different browsers */
+.field-select {
+  /* Remove default browser arrow and add our own via background image */
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px; /* Make room for the arrow */
+  cursor: pointer;
+}
+
+/* The unselected placeholder option is greyed out */
+.field-select option[value=""] {
+  color: #94a3b8;
+}
+
+/* Small textarea for plan field - taller than a single input
+   but not as tall as the full template textarea */
+.field-textarea {
+  background-color: #1e1e2e;
+  border: 1px solid #3a3a5c;
+  border-radius: 8px;
+  color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding: 10px 12px;
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+.field-textarea:focus {
+  outline: none;
+  border-color: #f59e0b;
+}
+
+.field-textarea::placeholder {
+  color: #3a3a5c;
+}
+
+/* ===== DESKTOP FORM LAYOUT ===== */
+/* On wider screens, show label and input side by side */
+@media (min-width: 640px) {
+  .field-row {
+    flex-direction: row; /* Label and input on same line */
+    align-items: center;
+    gap: 12px;
+  }
+
+  .field-label {
+    /* Fixed width label column so all inputs line up */
+    min-width: 180px;
+    width: 180px;
+  }
+}
+
+/* ===== SEGMENTED CONTROL ===== */
+/* The IA/cEFM toggle - same pattern as RM Tools */
+
+.segmented-control {
+  display: flex;
+  background-color: #1e1e2e;
+  border: 1px solid #3a3a5c;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+  width: 100%;
+}
+
+.segment {
+  flex: 1; /* Each segment takes equal width */
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: #94a3b8; /* Secondary text when not selected */
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+/* Active segment gets amber background and dark text */
+.segment.active {
+  background-color: #f59e0b;
+  color: #1e1e2e;
+}
+
+.segment:hover:not(.active) {
+  background-color: #3a3a5c;
+  color: #f1f5f9;
+}
+
+/* Spacing for monitoring type field groups */
+#t-ia-fields,
+#t-cefm-fields {
+  margin-top: 12px;
+}
+
+/* ===== CLEAR BUTTON ===== */
+.clear-btn {
+  width: 100%;
+  background-color: transparent;
+  color: #94a3b8;
+  border: 1px solid #3a3a5c;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+  margin-bottom: 12px; /* Space between clear and copy buttons */
+}
+
+.clear-btn:hover {
+  border-color: #94a3b8;
+  color: #f1f5f9;
+}
+
+/* Confirming state - turns red to signal destructive action */
+.clear-btn.confirming {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: #ffffff;
+}
