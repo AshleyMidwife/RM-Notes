@@ -956,3 +956,177 @@ function clearNewbornAdmission() {
     btn.classList.remove("confirming");
   }
 }
+
+// ===== NEWBORN DISCHARGE SUMMARY =====
+
+// showHipDetails() - shows/hides hip ultrasound risk factor field
+// Called when the hip ultrasound checkbox is ticked
+function showHipDetails() {
+  const hipCheckbox = document.getElementById("nd-hip-us");
+  const hipDetailsRow = document.getElementById("nd-hip-details-row");
+  // Show details field only if checkbox is checked
+  hipDetailsRow.style.display = hipCheckbox.checked ? "block" : "none";
+}
+
+// copyNewbornDischarge() - assembles all newborn discharge fields
+// into a clean formatted note and copies to clipboard
+function copyNewbornDischarge() {
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  function checked(id) {
+    const el = document.getElementById(id);
+    return el && el.checked;
+  }
+
+  // Build newborn screening list from checkboxes
+  const screeningCompleted =
+    [
+      checked("nd-nms") && "Newborn Metabolic Screen (NMS)",
+      checked("nd-hearing") && "Newborn Hearing Screen (EHDI)",
+      checked("nd-cchd") && "CCHD Screen",
+      checked("nd-jaundice") && "Jaundice Screening (TCB/TSB)"
+    ]
+      .filter(Boolean)
+      .join("\n- ") || "Not documented";
+
+  // Build discharge teaching list from checkboxes
+  const teachingTopics =
+    [
+      checked("nd-teach-feeding") && "Feeding",
+      checked("nd-teach-fever") && "Fever - ER if febrile in first 2 months of life",
+      checked("nd-teach-jaundice") && "Jaundice - signs and when to seek care",
+      checked("nd-teach-skin") && "Skin care",
+      checked("nd-teach-safe-sleep") && "Safe sleep",
+      checked("nd-teach-cord") && "Cord care",
+      checked("nd-teach-emergency") && "When to call midwifery or seek emergency care",
+      val("nd-teach-other") !== "___" && val("nd-teach-other")
+    ]
+      .filter(Boolean)
+      .join("\n- ") || "Not documented";
+
+  // Build conditional follow up items
+  // These only appear in the note if the checkbox is checked
+  const redReflex = checked("nd-red-reflex") ? "\n- Midwifery to check red reflex at first postpartum visit" : "";
+
+  const hipUltrasound = checked("nd-hip-us")
+    ? `\n- Hip ultrasound at 6 weeks recommended - risk factors: ${val("nd-hip-details")}`
+    : "";
+
+  const note = `NEWBORN DISCHARGE SUMMARY
+${"=".repeat(40)}
+
+IDENTIFICATION
+Baby of: ${val("nd-parent")}
+Date of Birth: ${val("nd-dob")}
+Gestational Age: ${val("nd-ga")}
+Sex: ${val("nd-sex")}
+Birth Weight: ${val("nd-birth-weight")}
+Discharge Weight: ${val("nd-discharge-weight")}
+Day of Life at Discharge: ${val("nd-dol")}
+
+MATERNAL HISTORY
+Maternal Age/GP: ${val("nd-maternal-gp")}
+ABO/Rh: ${val("nd-abo")}
+GBS Status: ${val("nd-gbs")}
+GBS Antibiotics: ${val("nd-antibiotics")}
+Pregnancy Complications: ${val("nd-preg-complications")}
+Perinatal Complications: ${val("nd-perinatal-complications")}
+Mode of Delivery: ${val("nd-mode")}
+Maternal Medications: ${val("nd-meds")}
+
+LABOUR AND DELIVERY
+Apgar Scores: ${val("nd-apgars")}
+Resuscitation: ${val("nd-resus")}
+Delayed Cord Clamping: ${val("nd-dcc")}
+Cord Vessels: ${val("nd-cord-vessels")}
+Cord Insertion: ${val("nd-cord-insertion")}
+Chorioamnionitis: ${val("nd-chorioamnionitis")}
+
+POSTPARTUM COURSE
+Vitamin K: ${val("nd-vitk")}
+Feeding: ${val("nd-feeding")}${val("nd-feeding-details") !== "___" ? " - " + val("nd-feeding-details") : ""}
+Void: ${val("nd-void")}
+Meconium: ${val("nd-mec")}
+
+NEWBORN SCREENING
+Completed:
+- ${screeningCompleted}${val("nd-screening-details") !== "___" ? "\nDetails: " + val("nd-screening-details") : ""}
+
+PHYSICAL EXAMINATION
+Vitals at Discharge: ${val("nd-vitals")}
+Discharge exam documented on BC Newborn Record Part 2.${val("nd-exam-notes") !== "___" ? "\nAdditional Notes: " + val("nd-exam-notes") : ""}
+
+FOLLOW UP PLAN
+${val("nd-followup")}
+${val("nd-vitd")}${redReflex}${hipUltrasound}
+NMS: ${val("nd-nms-followup")}
+Hearing: ${val("nd-hearing-followup")}
+
+DISCHARGE TEACHING
+Topics covered with caregivers:
+- ${teachingTopics}
+${val("nd-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("nd-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-newborn-discharge .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearNewbornDischarge() - two-tap clear pattern
+let clearNewbornDischargePending = false;
+
+function clearNewbornDischarge() {
+  const btn = document.getElementById("newborn-discharge-clear-btn");
+
+  if (!clearNewbornDischargePending) {
+    clearNewbornDischargePending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearNewbornDischargePending) {
+        clearNewbornDischargePending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearNewbornDischargePending = false;
+
+    const inputs = document.querySelectorAll("#screen-newborn-discharge .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-newborn-discharge .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-newborn-discharge .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    const checkboxes = document.querySelectorAll("#screen-newborn-discharge input[type='checkbox']");
+    checkboxes.forEach((cb) => (cb.checked = false));
+
+    // Hide hip details row on clear
+    document.getElementById("nd-hip-details-row").style.display = "none";
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}

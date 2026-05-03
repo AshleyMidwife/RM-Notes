@@ -2270,9 +2270,9 @@
         <!-- prettier-ignore -->
         <textarea class="template-area" id="na-exam">General: Well-appearing newborn, vigorous cry, no distress.
 HEENT: Normocephalic. No caput or cephalohematoma.
-Anterior fontanelle soft and flat. Sutures mobile.
-Eyes: No subconjunctival hemorrhage.
-Ears: Normal set and shape.
+    Anterior fontanelle soft and flat. Sutures mobile.
+    Eyes: No subconjunctival hemorrhage.
+    Ears: Normal set and shape.
 Oropharynx: Palate intact. No cleft. Tongue normal.
 Neck: Supple, no masses, normal range of motion. Clavicles palpate intact.
 Chest: Equal rise bilaterally. No retractions.
@@ -2347,13 +2347,432 @@ Skin: Pink, well-perfused. No rashes or birthmarks.</textarea>
       <button class="copy-btn" onclick="copyNewbornAdmission()">Copy Note to Clipboard</button>
     </main>
 
-    <!-- NEWBORN DISCHARGE -->
+    <!-- NEWBORN DISCHARGE SUMMARY -->
     <main id="screen-newborn-discharge" class="screen">
       <h2 class="screen-title">Newborn Discharge Summary</h2>
-      <textarea class="template-area" id="text-newborn-discharge">
-[NEWBORN DISCHARGE SUMMARY - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-newborn-discharge')">Copy to Clipboard</button>
+
+      <!-- ===== IDENTIFICATION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Identification</h3>
+
+        <div class="field-row">
+          <label class="field-label">Baby of</label>
+          <input class="field-input" type="text" id="nd-parent" placeholder="e.g. Baby of Jane Smith" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Date of Birth</label>
+          <input class="field-input" type="text" id="nd-dob" placeholder="e.g. 2026-05-01" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age</label>
+          <input class="field-input" type="text" id="nd-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Sex</label>
+          <select class="field-select" id="nd-sex">
+            <option value="">-- Select --</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Sex not yet assigned</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Birth Weight (g)</label>
+          <input class="field-input" type="text" id="nd-birth-weight" placeholder="e.g. 3420g" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Discharge Weight (g)</label>
+          <input class="field-input" type="text" id="nd-discharge-weight" placeholder="e.g. 3280g" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Day of Life at Discharge</label>
+          <input class="field-input" type="text" id="nd-dol" placeholder="e.g. DOL 2" />
+        </div>
+      </section>
+
+      <!-- ===== MATERNAL HISTORY ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Maternal History</h3>
+
+        <div class="field-row">
+          <label class="field-label">Maternal Age/GP</label>
+          <input class="field-input" type="text" id="nd-maternal-gp" placeholder="e.g. 28 year old G2P2" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">ABO/Rh</label>
+          <input class="field-input" type="text" id="nd-abo" placeholder="e.g. O+" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Status</label>
+          <select class="field-select" id="nd-gbs">
+            <option value="">-- Select --</option>
+            <option>Negative</option>
+            <option>Positive</option>
+            <option>Unknown</option>
+            <option>Pending</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Antibiotics</label>
+          <select class="field-select" id="nd-antibiotics">
+            <option value="">-- Select --</option>
+            <option>Not indicated</option>
+            <option>Adequate coverage given</option>
+            <option>Inadequate coverage</option>
+            <option>Declined by patient</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Pregnancy Complications</label>
+          <input class="field-input" type="text" id="nd-preg-complications" placeholder="e.g. None, or GDM, PIH" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Perinatal Complications</label>
+          <input
+            class="field-input"
+            type="text"
+            id="nd-perinatal-complications"
+            placeholder="e.g. None, or shoulder dystocia, meconium"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Mode of Delivery</label>
+          <select class="field-select" id="nd-mode">
+            <option value="">-- Select --</option>
+            <option>Spontaneous vaginal delivery</option>
+            <option>Assisted vaginal delivery - vacuum</option>
+            <option>Assisted vaginal delivery - forceps</option>
+            <option>Caesarean section - emergency</option>
+            <option>Caesarean section - elective</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Maternal Medications in Pregnancy</label>
+          <input class="field-input" type="text" id="nd-meds" placeholder="e.g. PNV, iron, or None significant" />
+        </div>
+      </section>
+
+      <!-- ===== LABOUR AND DELIVERY ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Labour and Delivery</h3>
+
+        <div class="field-row">
+          <label class="field-label">Apgar Scores</label>
+          <input class="field-input" type="text" id="nd-apgars" placeholder="e.g. 8 at 1 min, 9 at 5 min" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Resuscitation</label>
+          <select class="field-select" id="nd-resus">
+            <option value="">-- Select --</option>
+            <option>None required - vigorous at birth</option>
+            <option>Stimulation and drying</option>
+            <option>Supplemental oxygen</option>
+            <option>Positive pressure ventilation</option>
+            <option>PPV and chest compressions</option>
+            <option>Full resuscitation - medications given</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Delayed Cord Clamping</label>
+          <select class="field-select" id="nd-dcc">
+            <option value="">-- Select --</option>
+            <option>Yes - greater than 60 seconds</option>
+            <option>Yes - until cord stopped pulsating</option>
+            <option>Early clamping - clinical indication</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Cord Vessels</label>
+          <select class="field-select" id="nd-cord-vessels">
+            <option value="">-- Select --</option>
+            <option>3 vessels (normal)</option>
+            <option>2 vessels (single umbilical artery)</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Cord Insertion</label>
+          <select class="field-select" id="nd-cord-insertion">
+            <option value="">-- Select --</option>
+            <option>Central</option>
+            <option>Eccentric</option>
+            <option>Marginal (battledore)</option>
+            <option>Velamentous</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Chorioamnionitis</label>
+          <select class="field-select" id="nd-chorioamnionitis">
+            <option value="">-- Select --</option>
+            <option>No</option>
+            <option>Yes - see details</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== POSTPARTUM COURSE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Postpartum Course</h3>
+
+        <div class="field-row">
+          <label class="field-label">Vitamin K</label>
+          <select class="field-select" id="nd-vitk">
+            <option value="">-- Select --</option>
+            <option>Vitamin K 1mg IM administered</option>
+            <option>Declined by parents</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Feeding</label>
+          <select class="field-select" id="nd-feeding">
+            <option value="">-- Select --</option>
+            <option>Exclusively breastfeeding</option>
+            <option>Exclusively formula feeding</option>
+            <option>Combination feeding</option>
+            <option>Expressed breast milk</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Feeding Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="nd-feeding-details"
+            placeholder="e.g. Latch good, feeding q2-3h, adequate transfer"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Void</label>
+          <select class="field-select" id="nd-void">
+            <option value="">-- Select --</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Meconium</label>
+          <select class="field-select" id="nd-mec">
+            <option value="">-- Select --</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== NEWBORN SCREENING ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Newborn Screening</h3>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-nms" />
+            Newborn Metabolic Screen (NMS) completed
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-hearing" />
+            Newborn Hearing Screen (EHDI) completed
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-cchd" />
+            CCHD Screen completed
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-jaundice" />
+            Jaundice Screening (TCB/TSB) completed
+          </label>
+        </div>
+
+        <div class="field-row" style="margin-top: 12px">
+          <label class="field-label">Screening Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="nd-screening-details"
+            placeholder="e.g. NMS sent, hearing passed bilaterally, TCB 142"
+          />
+        </div>
+      </section>
+
+      <!-- ===== PHYSICAL EXAMINATION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Physical Examination</h3>
+        <p class="section-subtitle-small">Discharge exam documented on BC Newborn Record Part 2</p>
+
+        <div class="field-row">
+          <label class="field-label">Vitals at Discharge</label>
+          <input class="field-input" type="text" id="nd-vitals" placeholder="e.g. HR 142, RR 44, Temp 36.8, SpO2 98%" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Exam Notes</label>
+          <input
+            class="field-input"
+            type="text"
+            id="nd-exam-notes"
+            placeholder="Any additional exam findings to document"
+          />
+        </div>
+      </section>
+
+      <!-- ===== FOLLOW UP PLAN ===== -->
+      <!-- Checkboxes for conditional follow up items -->
+      <section class="note-section">
+        <h3 class="section-title">Follow Up Plan</h3>
+
+        <div class="field-row">
+          <label class="field-label">Primary Follow Up</label>
+          <input
+            class="field-input"
+            type="text"
+            id="nd-followup"
+            placeholder="e.g. Midwifery visit in 24-48h, unit notified of discharge"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Vitamin D</label>
+          <select class="field-select" id="nd-vitd">
+            <option value="">-- Select --</option>
+            <option>Vitamin D 400 IU PO daily recommended</option>
+            <option>Vitamin D 800 IU PO daily recommended</option>
+            <option>Discussed - parents aware</option>
+          </select>
+        </div>
+
+        <!-- Conditional follow up items -->
+        <!-- These checkboxes add specific lines to the copied note -->
+        <div class="field-row">
+          <label class="field-label">Additional Follow Up Items</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="nd-red-reflex" />
+              Red reflex check at first postpartum visit
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="nd-hip-us" onclick="showHipDetails()" />
+              Hip ultrasound at 6 weeks
+            </label>
+          </div>
+        </div>
+
+        <!-- Hip ultrasound risk factors - only shown if hip US checkbox checked -->
+        <div id="nd-hip-details-row" style="display: none">
+          <div class="field-row">
+            <label class="field-label">Hip US Risk Factors</label>
+            <input
+              class="field-input"
+              type="text"
+              id="nd-hip-details"
+              placeholder="e.g. Breech presentation, family history of DDH"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">NMS Follow Up</label>
+          <select class="field-select" id="nd-nms-followup">
+            <option value="">-- Select --</option>
+            <option>Midwifery to follow up NMS results</option>
+            <option>NMS results reviewed - normal</option>
+            <option>NMS results reviewed - follow up required</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Hearing Follow Up</label>
+          <select class="field-select" id="nd-hearing-followup">
+            <option value="">-- Select --</option>
+            <option>Midwifery to follow up hearing screen results</option>
+            <option>Passed bilaterally - no follow up required</option>
+            <option>Failed - urine CMV PCR within 21 days required</option>
+            <option>Referred for further assessment</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== DISCHARGE TEACHING ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Discharge Teaching</h3>
+        <p class="section-subtitle-small">Document topics covered with caregivers</p>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-feeding" />
+            Feeding
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-fever" />
+            Fever - ER if febrile in first 2 months of life
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-jaundice" />
+            Jaundice - signs and when to seek care
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-skin" />
+            Skin care
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-safe-sleep" />
+            Safe sleep
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-cord" />
+            Cord care
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="nd-teach-emergency" />
+            When to call midwifery or seek emergency care
+          </label>
+        </div>
+
+        <div class="field-row" style="margin-top: 12px">
+          <label class="field-label">Additional Teaching</label>
+          <input
+            class="field-input"
+            type="text"
+            id="nd-teach-other"
+            placeholder="Any additional teaching topics covered"
+          />
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="nd-other-notes"
+            placeholder="Any additional clinical details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="newborn-discharge-clear-btn" onclick="clearNewbornDischarge()">Clear All</button>
+      <button class="copy-btn" onclick="copyNewbornDischarge()">Copy Note to Clipboard</button>
     </main>
 
     <!-- PERINEAL REPAIR -->
