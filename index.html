@@ -2778,19 +2778,290 @@ Skin: Pink, well-perfused. No rashes or birthmarks.</textarea>
     <!-- PERINEAL REPAIR -->
     <main id="screen-perineal" class="screen">
       <h2 class="screen-title">Perineal Repair</h2>
-      <textarea class="template-area" id="text-perineal">
-[PERINEAL REPAIR NOTE - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-perineal')">Copy to Clipboard</button>
+
+      <!-- ===== REPAIR DETAILS ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Repair Details</h3>
+
+        <div class="field-row">
+          <label class="field-label">Laceration/Episiotomy</label>
+          <select class="field-select" id="pr-type">
+            <option value="">-- Select --</option>
+            <option>First degree laceration</option>
+            <option>Second degree laceration</option>
+            <option>Third degree laceration</option>
+            <option>Fourth degree laceration</option>
+            <option>Periurethral laceration</option>
+            <option>Labial laceration</option>
+            <option>Episiotomy</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Repaired By</label>
+          <select class="field-select" id="pr-provider">
+            <option value="">-- Select --</option>
+            <option>Attending midwife</option>
+            <option>Obstetrics</option>
+            <option>Other provider</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Anaesthetic</label>
+          <input
+            class="field-input"
+            type="text"
+            id="pr-anaesthetic"
+            placeholder="e.g. 10ml 1% lidocaine local infiltration"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Suture Material</label>
+          <input class="field-input" type="text" id="pr-suture" placeholder="e.g. 2-0 Vicryl absorbable suture" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Technique</label>
+          <input class="field-input" type="text" id="pr-technique" placeholder="e.g. Continuous subcuticular suture" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Haemostasis</label>
+          <select class="field-select" id="pr-haemostasis">
+            <option value="">-- Select --</option>
+            <option>Good haemostasis achieved</option>
+            <option>Haemostasis achieved with additional sutures</option>
+            <option>Haemostasis achieved with pressure</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Alignment</label>
+          <select class="field-select" id="pr-alignment">
+            <option value="">-- Select --</option>
+            <option>Good anatomical alignment achieved</option>
+            <option>Alignment achieved with additional sutures</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Tolerance</label>
+          <select class="field-select" id="pr-tolerance">
+            <option value="">-- Select --</option>
+            <option>Procedure well tolerated</option>
+            <option>Procedure tolerated with additional analgesia</option>
+            <option>Procedure poorly tolerated - see details</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== POST REPAIR CARE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Post Repair Care</h3>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="pr-sponge-bath" />
+            Sponge bath to area
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="pr-ice" />
+            Ice pad applied
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="pr-pads" />
+            Clean pads applied
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="pr-education" />
+            Education provided re wound aftercare
+          </label>
+        </div>
+
+        <div class="field-row" style="margin-top: 12px">
+          <label class="field-label">Additional Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="pr-details"
+            placeholder="Any additional repair or post-care details"
+          />
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="pr-other-notes"
+            placeholder="Any additional details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="perineal-clear-btn" onclick="clearPerinealRepair()">Clear All</button>
+      <button class="copy-btn" onclick="copyPerinealRepair()">Copy Note to Clipboard</button>
     </main>
 
-    <!-- TRANSFER OF CARE -->
+    <!-- TRANSFER OF CARE TO OB -->
     <main id="screen-transfer" class="screen">
       <h2 class="screen-title">Transfer of Care to OB</h2>
-      <textarea class="template-area" id="text-transfer">
-[TRANSFER OF CARE NOTE - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-transfer')">Copy to Clipboard</button>
+
+      <!-- ===== TRANSFER DETAILS ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Transfer Details</h3>
+
+        <div class="field-row">
+          <label class="field-label">Patient Name</label>
+          <input class="field-input" type="text" id="tc-name" placeholder="Patient name" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gravida/Para</label>
+          <input class="field-input" type="text" id="tc-gp" placeholder="e.g. G2P1" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age</label>
+          <input class="field-input" type="text" id="tc-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Time of Transfer</label>
+          <input class="field-input" type="text" id="tc-time" placeholder="e.g. 14:32" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Reason for Transfer</label>
+          <select class="field-select" id="tc-reason">
+            <option value="">-- Select --</option>
+            <option>Arrest of active labour</option>
+            <option>Arrest of second stage</option>
+            <option>Non-reassuring fetal status</option>
+            <option>Maternal hemorrhage</option>
+            <option>Maternal hypertension/PIH</option>
+            <option>Assisted delivery required</option>
+            <option>Caesarean section required</option>
+            <option>Maternal request</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Reason Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="tc-reason-details"
+            placeholder="Clinical details supporting transfer decision"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Receiving OB</label>
+          <input class="field-input" type="text" id="tc-ob" placeholder="e.g. Dr. Smith" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Care Accepted By</label>
+          <input class="field-input" type="text" id="tc-accepted-by" placeholder="e.g. Dr. Smith at 14:35" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">PCN Assigned</label>
+          <input class="field-input" type="text" id="tc-pcn" placeholder="e.g. RN Jane Doe assigned at 14:36" />
+        </div>
+      </section>
+
+      <!-- ===== CLINICAL STATUS AT TRANSFER ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Clinical Status at Transfer</h3>
+
+        <div class="field-row">
+          <label class="field-label">Maternal Vitals</label>
+          <input class="field-input" type="text" id="tc-vitals" placeholder="e.g. BP 138/92, HR 88, afebrile" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Fetal Status</label>
+          <input
+            class="field-input"
+            type="text"
+            id="tc-fetal-status"
+            placeholder="e.g. FHR 140 baseline, moderate variability, no decelerations"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Cervical Exam</label>
+          <input class="field-input" type="text" id="tc-cx" placeholder="e.g. 6cm dilated, fully effaced, 0 station" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Clinical Summary</label>
+          <textarea
+            class="field-textarea"
+            id="tc-summary"
+            placeholder="Brief summary of clinical course leading to transfer..."
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===== MIDWIFERY ROLE POST TRANSFER ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Midwifery Role Post Transfer</h3>
+
+        <div class="field-row">
+          <label class="field-label">Midwifery Role</label>
+          <select class="field-select" id="tc-rm-role">
+            <option value="">-- Select --</option>
+            <option>RM to remain as part of care team in supportive role</option>
+            <option>RM charting complete up to time of transfer</option>
+            <option>RM available by phone if needed</option>
+            <option>Full transfer of care - RM no longer primary provider</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">History Reviewed With</label>
+          <input
+            class="field-input"
+            type="text"
+            id="tc-handover"
+            placeholder="e.g. History and status reviewed by RM with OB team and assigned PCN"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Informed Choice Discussion</label>
+          <textarea
+            class="field-textarea"
+            id="tc-informed-choice"
+            placeholder="e.g. Transfer of care discussed with patient, risks and benefits reviewed, questions answered, agreeable to plan."
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="tc-other-notes"
+            placeholder="Any additional details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="transfer-clear-btn" onclick="clearTransferNote()">Clear All</button>
+      <button class="copy-btn" onclick="copyTransferNote()">Copy Note to Clipboard</button>
     </main>
 
     <!-- Links to our JavaScript file - always at bottom of body -->
