@@ -422,3 +422,247 @@ function clearProgressNote() {
     btn.classList.remove("confirming");
   }
 }
+
+// ===== DELIVERY NOTE =====
+
+// Tracks whether shoulder dystocia and PPH sections are active
+let shoulderDystocia = false;
+let pphOccurred = false;
+
+// setShoulderDystocia() - shows/hides shoulder dystocia fields
+function setShoulderDystocia(active) {
+  shoulderDystocia = active;
+
+  const fields = document.getElementById("d-sd-fields");
+  const noBtn = document.getElementById("d-sd-no");
+  const yesBtn = document.getElementById("d-sd-yes");
+
+  if (active) {
+    fields.style.display = "block";
+    yesBtn.classList.add("active");
+    noBtn.classList.remove("active");
+  } else {
+    fields.style.display = "none";
+    noBtn.classList.add("active");
+    yesBtn.classList.remove("active");
+  }
+}
+
+// setPPH() - shows/hides PPH fields
+function setPPH(active) {
+  pphOccurred = active;
+
+  const fields = document.getElementById("d-pph-fields");
+  const noBtn = document.getElementById("d-pph-no");
+  const yesBtn = document.getElementById("d-pph-yes");
+
+  if (active) {
+    fields.style.display = "block";
+    yesBtn.classList.add("active");
+    noBtn.classList.remove("active");
+  } else {
+    fields.style.display = "none";
+    noBtn.classList.add("active");
+    yesBtn.classList.remove("active");
+  }
+}
+
+// copyDeliveryNote() - assembles all delivery note fields into
+// a clean formatted note and copies to clipboard
+function copyDeliveryNote() {
+  // Same helper as other notes - reads field value or returns fallback
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  // Helper for checkboxes - returns label text if checked
+  // Used to build the maneuvers and uterotonics lists
+  function checked(id) {
+    const el = document.getElementById(id);
+    return el && el.checked;
+  }
+
+  // Build shoulder dystocia maneuvers list from checkboxes
+  // Only includes maneuvers that were checked
+  const sdManeuvers =
+    [
+      checked("d-sd-mcroberts") && "McRoberts",
+      checked("d-sd-spp") && "Suprapubic Pressure",
+      checked("d-sd-posterior-arm") && "Delivery of Posterior Arm",
+      checked("d-sd-rubin") && "Rubin II",
+      checked("d-sd-woods") && "Woods Screw",
+      checked("d-sd-gaskin") && "Gaskin (All Fours)",
+      checked("d-sd-zavanelli") && "Zavanelli",
+      checked("d-sd-other-maneuver") && "Other"
+    ]
+      .filter(Boolean) // Remove unchecked (false) values
+      .join(", ") || "None documented";
+
+  // Build PPH uterotonics list from checkboxes
+  const pphUterotonics =
+    [
+      checked("d-pph-oxytocin") && "Oxytocin IV",
+      checked("d-pph-carbetocin") && "Carbetocin",
+      checked("d-pph-misoprostol") && "Misoprostol",
+      checked("d-pph-ergometrine") && "Ergometrine",
+      checked("d-pph-txa") && "Tranexamic Acid",
+      checked("d-pph-other-drug") && "Other"
+    ]
+      .filter(Boolean)
+      .join(", ") || "None documented";
+
+  // Build shoulder dystocia section - only included if toggle is on
+  const sdSection = shoulderDystocia
+    ? `
+SHOULDER DYSTOCIA
+Time of Head Delivery: ${val("d-sd-head-time")}
+Time of Body Delivery: ${val("d-sd-body-time")}
+Maneuvers Attempted: ${sdManeuvers}
+Sequence & Details: ${val("d-sd-narrative")}
+Personnel Present: ${val("d-sd-personnel")}
+Neonatal Outcome: ${val("d-sd-neonatal-outcome")}`
+    : `
+SHOULDER DYSTOCIA
+Not encountered`;
+
+  // Build PPH section - only included if toggle is on
+  const pphSection = pphOccurred
+    ? `
+POSTPARTUM HEMORRHAGE (>500ml)
+Total EBL: ${val("d-pph-ebl")}
+Suspected Cause: ${val("d-pph-cause")}
+Uterotonics Given: ${pphUterotonics}
+Additional Interventions: ${val("d-pph-interventions")}
+OB Consulted: ${val("d-pph-ob")}
+Response to Treatment: ${val("d-pph-response")}`
+    : `
+POSTPARTUM HEMORRHAGE
+Not applicable`;
+
+  const note = `DELIVERY NOTE
+${"=".repeat(40)}
+
+ANTEPARTUM CONTEXT
+Patient: ${val("d-name")}
+Gravida/Para: ${val("d-gp")}
+Gestational Age: ${val("d-ga")}
+GBS Status: ${val("d-gbs")}
+Relevant History: ${val("d-hx")}
+
+LABOUR SUMMARY
+Duration: ${val("d-labour-duration")}
+Membranes: ${val("d-membranes")}${val("d-rom-details") !== "___" ? " - " + val("d-rom-details") : ""}
+Augmentation: ${val("d-augmentation")}${val("d-augmentation-details") !== "___" ? " - " + val("d-augmentation-details") : ""}
+Analgesia: ${val("d-analgesia")}
+GBS Antibiotics: ${val("d-antibiotics")}
+
+SECOND STAGE
+Duration: ${val("d-second-stage")}
+Pushing Position: ${val("d-pushing-position")}
+Perineal Support: ${val("d-perineal-support")}
+Fetal Position at Delivery: ${val("d-fetal-position")}
+
+BIRTH
+Time of Birth: ${val("d-tob")}
+Sex: ${val("d-sex")}
+Presentation: ${val("d-presentation")}
+Nuchal Cord: ${val("d-nuchal")}
+Delayed Cord Clamping: ${val("d-dcc")}${val("d-dcc-details") !== "___" ? " - " + val("d-dcc-details") : ""}
+${sdSection}
+
+IMMEDIATE NEWBORN
+Apgar Scores: ${val("d-apgar1")} at 1 min | ${val("d-apgar5")} at 5 min | ${val("d-apgar10")} at 10 min
+Resuscitation: ${val("d-resus")}${val("d-resus-details") !== "___" ? " - " + val("d-resus-details") : ""}
+Skin to Skin: ${val("d-sts")}
+
+THIRD STAGE
+Management: ${val("d-third-stage")}
+Oxytocin/Uterotonics: ${val("d-oxytocin")}
+Time of Placenta Delivery: ${val("d-placenta-time")}
+Placenta Completeness: ${val("d-placenta-complete")}
+Membranes: ${val("d-placenta-membranes")}
+Cord Vessels: ${val("d-cord-vessels")}
+Cord Insertion: ${val("d-cord-insertion")}
+Estimated Blood Loss: ${val("d-ebl")}
+Uterine Tone: ${val("d-tone")}
+${pphSection}
+
+PERINEUM
+Status: ${val("d-perineum")}
+Repair: ${val("d-repair")}${val("d-repair-details") !== "___" ? " - " + val("d-repair-details") : ""}
+
+IMMEDIATE POSTPARTUM
+Vitals: ${val("d-pp-vitals")}
+Pain: ${val("d-pp-pain")}
+Bleeding: ${val("d-pp-bleeding")}
+Feeding: ${val("d-feeding")}
+
+PLAN & INFORMED CHOICE
+Disposition: ${val("d-disposition")}${val("d-consulting") !== "___" ? "\nConsulting Provider: " + val("d-consulting") : ""}
+Informed Choice: ${val("d-informed-choice")}
+${val("d-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("d-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-delivery .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearDeliveryNote() - two-tap clear pattern
+let clearDeliveryPending = false;
+
+function clearDeliveryNote() {
+  const btn = document.getElementById("delivery-clear-btn");
+
+  if (!clearDeliveryPending) {
+    clearDeliveryPending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearDeliveryPending) {
+        clearDeliveryPending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearDeliveryPending = false;
+
+    // Clear all inputs, selects, textareas
+    const inputs = document.querySelectorAll("#screen-delivery .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-delivery .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-delivery .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    // Uncheck all checkboxes
+    const checkboxes = document.querySelectorAll("#screen-delivery input[type='checkbox']");
+    checkboxes.forEach((cb) => (cb.checked = false));
+
+    // Reset toggles to default states
+    setShoulderDystocia(false);
+    setPPH(false);
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}
