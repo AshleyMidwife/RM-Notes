@@ -910,10 +910,711 @@
     <!-- DELIVERY NOTE -->
     <main id="screen-delivery" class="screen">
       <h2 class="screen-title">Delivery Note</h2>
-      <textarea class="template-area" id="text-delivery">
-[DELIVERY NOTE - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-delivery')">Copy to Clipboard</button>
+
+      <!-- ===== ANTEPARTUM CONTEXT ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Antepartum Context</h3>
+
+        <div class="field-row">
+          <label class="field-label">Patient Name</label>
+          <input class="field-input" type="text" id="d-name" placeholder="Patient name" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gravida/Para</label>
+          <input class="field-input" type="text" id="d-gp" placeholder="e.g. G2P1" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age</label>
+          <input class="field-input" type="text" id="d-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Status</label>
+          <select class="field-select" id="d-gbs">
+            <option value="">-- Select --</option>
+            <option>Negative</option>
+            <option>Positive</option>
+            <option>Unknown</option>
+            <option>Pending</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Relevant History</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-hx"
+            placeholder="e.g. Nil significant, or previous shoulder dystocia"
+          />
+        </div>
+      </section>
+
+      <!-- ===== LABOUR SUMMARY ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Labour Summary</h3>
+
+        <div class="field-row">
+          <label class="field-label">Duration of Labour</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-labour-duration"
+            placeholder="e.g. Active labour 4hrs, total labour 10hrs"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Membranes</label>
+          <select class="field-select" id="d-membranes">
+            <option value="">-- Select --</option>
+            <option>Spontaneous rupture of membranes</option>
+            <option>Artificial rupture of membranes</option>
+            <option>Intact until delivery</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">ROM Details</label>
+          <input class="field-input" type="text" id="d-rom-details" placeholder="e.g. time, colour, amount" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Augmentation</label>
+          <select class="field-select" id="d-augmentation">
+            <option value="">-- Select --</option>
+            <option>None</option>
+            <option>Oxytocin</option>
+            <option>AROM only</option>
+            <option>Oxytocin and AROM</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Augmentation Details</label>
+          <input class="field-input" type="text" id="d-augmentation-details" placeholder="e.g. max rate, duration" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Analgesia</label>
+          <input class="field-input" type="text" id="d-analgesia" placeholder="e.g. Unmedicated, epidural, N2O" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Antibiotics</label>
+          <select class="field-select" id="d-antibiotics">
+            <option value="">-- Select --</option>
+            <option>Not indicated</option>
+            <option>Adequate coverage given</option>
+            <option>Inadequate coverage</option>
+            <option>Declined by patient</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== SECOND STAGE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Second Stage</h3>
+
+        <div class="field-row">
+          <label class="field-label">Duration</label>
+          <input class="field-input" type="text" id="d-second-stage" placeholder="e.g. 45 minutes" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Pushing Position</label>
+          <select class="field-select" id="d-pushing-position">
+            <option value="">-- Select --</option>
+            <option>Semi-recumbent</option>
+            <option>Lateral</option>
+            <option>Hands and knees</option>
+            <option>Squatting</option>
+            <option>Standing</option>
+            <option>Water birth</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Perineal Support</label>
+          <select class="field-select" id="d-perineal-support">
+            <option value="">-- Select --</option>
+            <option>Hands on</option>
+            <option>Hands poised</option>
+            <option>Warm compress applied</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Fetal Position at Delivery</label>
+          <input class="field-input" type="text" id="d-fetal-position" placeholder="e.g. OA, OP, LOA" />
+        </div>
+      </section>
+
+      <!-- ===== BIRTH ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Birth</h3>
+
+        <div class="field-row">
+          <label class="field-label">Time of Birth</label>
+          <input class="field-input" type="text" id="d-tob" placeholder="e.g. 14:32" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Sex</label>
+          <select class="field-select" id="d-sex">
+            <option value="">-- Select --</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Sex not yet assigned</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Presentation</label>
+          <select class="field-select" id="d-presentation">
+            <option value="">-- Select --</option>
+            <option>Vertex</option>
+            <option>Face</option>
+            <option>Brow</option>
+            <option>Breech</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Nuchal Cord</label>
+          <select class="field-select" id="d-nuchal">
+            <option value="">-- Select --</option>
+            <option>None</option>
+            <option>Nuchal cord x1 - reduced</option>
+            <option>Nuchal cord x1 - somersault maneuver</option>
+            <option>Nuchal cord x2 - reduced</option>
+            <option>Nuchal cord x2 - somersault maneuver</option>
+            <option>Nuchal cord - cut prior to delivery</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Delayed Cord Clamping</label>
+          <select class="field-select" id="d-dcc">
+            <option value="">-- Select --</option>
+            <option>Yes - greater than 60 seconds</option>
+            <option>Yes - until cord stopped pulsating</option>
+            <option>Delayed - cord milking performed</option>
+            <option>Early clamping - clinical indication</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">DCC Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-dcc-details"
+            placeholder="e.g. clinical indication for early clamping"
+          />
+        </div>
+      </section>
+
+      <!-- ===== SHOULDER DYSTOCIA TOGGLE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Shoulder Dystocia</h3>
+
+        <div class="field-row">
+          <label class="field-label">Shoulder Dystocia</label>
+          <div class="segmented-control">
+            <button class="segment active" id="d-sd-no" onclick="setShoulderDystocia(false)">Not Encountered</button>
+            <button class="segment" id="d-sd-yes" onclick="setShoulderDystocia(true)">Encountered</button>
+          </div>
+        </div>
+
+        <!-- Shoulder dystocia details - hidden by default -->
+        <div id="d-sd-fields" style="display: none">
+          <div class="field-row">
+            <label class="field-label">Time of Head Delivery</label>
+            <input class="field-input" type="text" id="d-sd-head-time" placeholder="e.g. 14:32" />
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Time of Body Delivery</label>
+            <input class="field-input" type="text" id="d-sd-body-time" placeholder="e.g. 14:34" />
+          </div>
+
+          <!-- Checkboxes for maneuvers attempted -->
+          <!-- Each checkbox is a reference/memory aid for the narrative below -->
+          <div class="field-row">
+            <label class="field-label">Maneuvers Attempted</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-mcroberts" />
+                McRoberts
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-spp" />
+                Suprapubic Pressure
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-posterior-arm" />
+                Delivery of Posterior Arm
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-rubin" />
+                Rubin II
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-woods" />
+                Woods Screw
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-gaskin" />
+                Gaskin (All Fours)
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-zavanelli" />
+                Zavanelli
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-sd-other-maneuver" />
+                Other
+              </label>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Sequence & Details</label>
+            <textarea
+              class="field-textarea"
+              id="d-sd-narrative"
+              placeholder="Document the sequence of maneuvers, personnel called, timing, and response..."
+            ></textarea>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Personnel Present</label>
+            <input
+              class="field-input"
+              type="text"
+              id="d-sd-personnel"
+              placeholder="e.g. OB Dr. ___, Pediatrics, additional RN x2"
+            />
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Neonatal Outcome</label>
+            <input
+              class="field-input"
+              type="text"
+              id="d-sd-neonatal-outcome"
+              placeholder="e.g. Delivered in good condition, Apgars 8/9"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== IMMEDIATE NEWBORN ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Immediate Newborn</h3>
+
+        <div class="field-row">
+          <label class="field-label">Apgar 1 min</label>
+          <select class="field-select" id="d-apgar1">
+            <option value="">-- Select --</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Apgar 5 min</label>
+          <select class="field-select" id="d-apgar5">
+            <option value="">-- Select --</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Apgar 10 min</label>
+          <select class="field-select" id="d-apgar10">
+            <option value="">-- Select --</option>
+            <option>N/A</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Resuscitation</label>
+          <select class="field-select" id="d-resus">
+            <option value="">-- Select --</option>
+            <option>None required - vigorous at birth</option>
+            <option>Stimulation and drying</option>
+            <option>Supplemental oxygen</option>
+            <option>Positive pressure ventilation</option>
+            <option>PPV and chest compressions</option>
+            <option>Full resuscitation - medications given</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Resuscitation Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-resus-details"
+            placeholder="e.g. PPV x2 mins, good response, transferred to NICU"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Skin to Skin</label>
+          <select class="field-select" id="d-sts">
+            <option value="">-- Select --</option>
+            <option>Immediate skin to skin achieved</option>
+            <option>Delayed skin to skin - clinical indication</option>
+            <option>Skin to skin with support person</option>
+            <option>Not achieved</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== THIRD STAGE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Third Stage</h3>
+
+        <div class="field-row">
+          <label class="field-label">Management</label>
+          <select class="field-select" id="d-third-stage">
+            <option value="">-- Select --</option>
+            <option>Physiological third stage</option>
+            <option>Active management</option>
+            <option>Modified active management</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Oxytocin/Uterotonics</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-oxytocin"
+            placeholder="e.g. Oxytocin 10 IU IM at delivery of anterior shoulder"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Time of Placenta Delivery</label>
+          <input class="field-input" type="text" id="d-placenta-time" placeholder="e.g. 14:52" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Placenta Completeness</label>
+          <select class="field-select" id="d-placenta-complete">
+            <option value="">-- Select --</option>
+            <option>Complete</option>
+            <option>Incomplete - further management</option>
+            <option>Uncertain</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Membranes</label>
+          <select class="field-select" id="d-placenta-membranes">
+            <option value="">-- Select --</option>
+            <option>Complete</option>
+            <option>Incomplete</option>
+            <option>Uncertain</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Cord Vessels</label>
+          <select class="field-select" id="d-cord-vessels">
+            <option value="">-- Select --</option>
+            <option>3 vessels (normal)</option>
+            <option>2 vessels (single umbilical artery)</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Cord Insertion</label>
+          <select class="field-select" id="d-cord-insertion">
+            <option value="">-- Select --</option>
+            <option>Central</option>
+            <option>Eccentric</option>
+            <option>Marginal (battledore)</option>
+            <option>Velamentous</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Estimated Blood Loss</label>
+          <input class="field-input" type="text" id="d-ebl" placeholder="e.g. 300ml" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Uterine Tone</label>
+          <select class="field-select" id="d-tone">
+            <option value="">-- Select --</option>
+            <option>Well contracted</option>
+            <option>Boggy, responding to massage/oxytocin</option>
+            <option>Boggy, not responding - escalating care</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== PPH TOGGLE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Postpartum Hemorrhage</h3>
+
+        <div class="field-row">
+          <label class="field-label">PPH (&gt;500ml)</label>
+          <div class="segmented-control">
+            <button class="segment active" id="d-pph-no" onclick="setPPH(false)">Not Applicable</button>
+            <button class="segment" id="d-pph-yes" onclick="setPPH(true)">PPH Occurred</button>
+          </div>
+        </div>
+
+        <!-- PPH details - hidden by default -->
+        <div id="d-pph-fields" style="display: none">
+          <div class="field-row">
+            <label class="field-label">Total EBL</label>
+            <input class="field-input" type="text" id="d-pph-ebl" placeholder="e.g. 750ml" />
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Suspected Cause</label>
+            <select class="field-select" id="d-pph-cause">
+              <option value="">-- Select --</option>
+              <option>Uterine atony</option>
+              <option>Retained placenta/membranes</option>
+              <option>Trauma/laceration</option>
+              <option>Coagulopathy</option>
+              <option>Unknown</option>
+            </select>
+          </div>
+
+          <!-- Checkboxes for uterotonics given -->
+          <div class="field-row">
+            <label class="field-label">Uterotonics Given</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-pph-oxytocin" />
+                Oxytocin IV
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-pph-carbetocin" />
+                Carbetocin
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-pph-misoprostol" />
+                Misoprostol
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-pph-ergometrine" />
+                Ergometrine
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-pph-txa" />
+                Tranexamic Acid
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="d-pph-other-drug" />
+                Other
+              </label>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Additional Interventions</label>
+            <textarea
+              class="field-textarea"
+              id="d-pph-interventions"
+              placeholder="e.g. Bimanual compression, IV access x2, fluid resuscitation, OB consulted..."
+            ></textarea>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">OB Consulted</label>
+            <select class="field-select" id="d-pph-ob">
+              <option value="">-- Select --</option>
+              <option>Yes - care transferred</option>
+              <option>Yes - co-managing</option>
+              <option>No - managed by midwifery</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Response to Treatment</label>
+            <input
+              class="field-input"
+              type="text"
+              id="d-pph-response"
+              placeholder="e.g. Good response, bleeding controlled, stable vitals"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PERINEUM ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Perineum</h3>
+
+        <div class="field-row">
+          <label class="field-label">Perineal Status</label>
+          <select class="field-select" id="d-perineum">
+            <option value="">-- Select --</option>
+            <option>Intact</option>
+            <option>First degree laceration</option>
+            <option>Second degree laceration</option>
+            <option>Third degree laceration</option>
+            <option>Fourth degree laceration</option>
+            <option>Periurethral laceration</option>
+            <option>Labial laceration</option>
+            <option>Episiotomy</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Repair</label>
+          <select class="field-select" id="d-repair">
+            <option value="">-- Select --</option>
+            <option>No repair required</option>
+            <option>Repaired by attending midwife</option>
+            <option>Repaired by OB</option>
+            <option>Repair declined by patient</option>
+            <option>Referred for repair</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Repair Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-repair-details"
+            placeholder="e.g. 2-0 vicryl, continuous suture, good haemostasis"
+          />
+        </div>
+      </section>
+
+      <!-- ===== IMMEDIATE POSTPARTUM ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Immediate Postpartum</h3>
+
+        <div class="field-row">
+          <label class="field-label">Maternal Vitals</label>
+          <input class="field-input" type="text" id="d-pp-vitals" placeholder="e.g. BP 118/72, HR 76, afebrile" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Pain</label>
+          <select class="field-select" id="d-pp-pain">
+            <option value="">-- Select --</option>
+            <option>Well controlled</option>
+            <option>Managed with PRN analgesia</option>
+            <option>Poorly controlled - further management</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Bleeding</label>
+          <select class="field-select" id="d-pp-bleeding">
+            <option value="">-- Select --</option>
+            <option>Normal lochia</option>
+            <option>Heavy lochia - monitoring</option>
+            <option>Excessive - management initiated</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Feeding</label>
+          <select class="field-select" id="d-feeding">
+            <option value="">-- Select --</option>
+            <option>Breastfeeding initiated</option>
+            <option>Formula feeding</option>
+            <option>Combination feeding</option>
+            <option>Feeding not yet initiated</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== PLAN & INFORMED CHOICE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Plan & Informed Choice</h3>
+
+        <div class="field-row">
+          <label class="field-label">Disposition</label>
+          <select class="field-select" id="d-disposition">
+            <option value="">-- Select --</option>
+            <option>Direct discharge under midwifery care</option>
+            <option>Admitted to postpartum unit</option>
+            <option>Transfer of care to OB</option>
+            <option>Transfer to higher level of care</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Consulting Provider</label>
+          <input
+            class="field-input"
+            type="text"
+            id="d-consulting"
+            placeholder="e.g. Reviewed with Dr. ___, Dr. ___ in attendance"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Informed Choice Discussion</label>
+          <textarea
+            class="field-textarea"
+            id="d-informed-choice"
+            placeholder="e.g. Risks, benefits and options discussed throughout labour and delivery. All questions answered."
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="d-other-notes"
+            placeholder="Any additional clinical details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="delivery-clear-btn" onclick="clearDeliveryNote()">Clear All</button>
+      <button class="copy-btn" onclick="copyDeliveryNote()">Copy Note to Clipboard</button>
     </main>
 
     <!-- MATERNAL DISCHARGE -->
