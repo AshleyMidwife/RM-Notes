@@ -803,3 +803,156 @@ function clearMaternalDischarge() {
     btn.classList.remove("confirming");
   }
 }
+
+// ===== NEWBORN ADMISSION H&P =====
+
+// copyNewbornAdmission() - assembles all newborn admission fields
+// into a clean formatted note and copies to clipboard
+function copyNewbornAdmission() {
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  function checked(id) {
+    const el = document.getElementById(id);
+    return el && el.checked;
+  }
+
+  // Build immediate newborn care list from checkboxes
+  const newbornCare =
+    [
+      checked("na-vitk") && "Vitamin K 1mg IM administered",
+      checked("na-erythro") && "Erythromycin eye ointment applied"
+    ]
+      .filter(Boolean)
+      .join("\n- ") || "Not documented";
+
+  const note = `NEWBORN ADMISSION H&P
+${"=".repeat(40)}
+
+IDENTIFICATION
+Baby of: ${val("na-parent")}
+Date of Birth: ${val("na-dob")}
+Time of Birth: ${val("na-tob")}
+Gestational Age: ${val("na-ga")}
+Sex: ${val("na-sex")}
+Birth Weight: ${val("na-weight")}
+Apgar Scores: ${val("na-apgars")}
+
+MATERNAL HISTORY
+Maternal Age/GP: ${val("na-maternal-gp")}
+GBS Status: ${val("na-gbs")}
+GBS Antibiotics: ${val("na-antibiotics")}
+ABO/Rh: ${val("na-abo")}
+Prenatal Care: ${val("na-pnc")}
+Pregnancy Complications: ${val("na-preg-complications")}
+Perinatal Complications: ${val("na-perinatal-complications")}
+Mode of Delivery: ${val("na-mode")}
+Membranes: ${val("na-membranes")}
+ROM to Delivery: ${val("na-rom-duration")}
+Maternal Medications: ${val("na-meds")}
+
+IMMEDIATE NEWBORN CARE
+Newborn Care Completed: 
+- ${newbornCare}
+Delayed Cord Clamping: ${val("na-dcc")}${val("na-dcc-details") !== "___" ? " - " + val("na-dcc-details") : ""}
+Skin to Skin: ${val("na-sts")}${val("na-sts-details") !== "___" ? " - " + val("na-sts-details") : ""}
+Breastfeeding Initiation: ${val("na-bf-initiation")}${val("na-bf-details") !== "___" ? " - " + val("na-bf-details") : ""}
+Resuscitation: ${val("na-resus")}${val("na-resus-details") !== "___" ? " - " + val("na-resus-details") : ""}
+
+PHYSICAL EXAMINATION
+Vitals: ${val("na-vitals")}
+
+${val("na-exam")}
+
+FEEDING
+Type: ${val("na-feeding-type")}
+Course: ${val("na-feeding-details")}
+Void: ${val("na-void")}
+Meconium: ${val("na-mec")}
+${val("na-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("na-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-newborn-admission .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearNewbornAdmission() - two-tap clear pattern
+// Note: clears form fields but resets physical exam to normal findings
+let clearNewbornAdmissionPending = false;
+
+// Store the default exam text so we can restore it on clear
+const defaultNewbornExam = `General: Well-appearing newborn, vigorous cry, no distress.
+HEENT: Normocephalic. No caput or cephalohematoma.
+  Anterior fontanelle soft and flat. Sutures mobile.
+  Eyes: No subconjunctival hemorrhage.
+  Ears: Normal set and shape.
+  Oropharynx: Palate intact. No cleft. Tongue normal.
+Neck: Supple, no masses, normal range of motion. Clavicles palpate intact.
+Chest: Equal rise bilaterally. No retractions.
+CVS: Normal S1 S2. No murmur. Femoral and brachial pulses palpable bilaterally.
+Resp: Clear to auscultation bilaterally. No adventitious sounds.
+Abdomen: Soft, non-distended, with normal bowel sounds. No organomegaly. Cord intact.
+GU: Normal [male/female] genitalia. [Testes descended bilaterally.]
+MSK: Full range of motion all limbs. No fractures appreciated or suspected.
+  Hips: Negative Barlow and Ortolani bilaterally.
+  Spine: Straight. No sacral dimple.
+Neuro: Normal tone. Moro, grasp, and suck reflexes present.
+Skin: Pink, well-perfused. No rashes or birthmarks.`;
+
+function clearNewbornAdmission() {
+  const btn = document.getElementById("newborn-admission-clear-btn");
+
+  if (!clearNewbornAdmissionPending) {
+    clearNewbornAdmissionPending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearNewbornAdmissionPending) {
+        clearNewbornAdmissionPending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearNewbornAdmissionPending = false;
+
+    const inputs = document.querySelectorAll("#screen-newborn-admission .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-newborn-admission .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    // Clear freetext areas but restore exam to default normal findings
+    // rather than leaving it blank - this is the key difference from
+    // other clear functions
+    const textareas = document.querySelectorAll("#screen-newborn-admission .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    // Restore the pre-populated exam text specifically
+    document.getElementById("na-exam").value = defaultNewbornExam;
+
+    const checkboxes = document.querySelectorAll("#screen-newborn-admission input[type='checkbox']");
+    checkboxes.forEach((cb) => (cb.checked = false));
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}
