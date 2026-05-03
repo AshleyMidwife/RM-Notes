@@ -14,6 +14,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="RM Notes" />
+    <!-- PWA manifest - tells browser this is an installable app -->
+    <link rel="manifest" href="/RM-Notes/manifest.json" />
+
+    <!-- Apple PWA meta tags - needed for iOS home screen installation -->
+    <link rel="apple-touch-icon" href="/RM-Notes/icons/icon-192.png" />
   </head>
 
   <body>
@@ -3066,5 +3071,17 @@ Skin: Pink, well-perfused. No rashes or birthmarks.</textarea>
 
     <!-- Links to our JavaScript file - always at bottom of body -->
     <script src="js/app.js"></script>
+
+    <!-- Register service worker for PWA/offline support -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/RM-Notes/sw.js")
+            .then(() => console.log("RM Notes: service worker registered"))
+            .catch((err) => console.log("RM Notes: service worker failed", err));
+        });
+      }
+    </script>
   </body>
 </html>
