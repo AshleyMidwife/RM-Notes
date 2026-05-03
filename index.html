@@ -2001,13 +2001,328 @@
       <button class="copy-btn" onclick="copyMaternalDischarge()">Copy Note to Clipboard</button>
     </main>
 
-    <!-- NEWBORN ADMISSION -->
+    <!-- NEWBORN ADMISSION H&P -->
     <main id="screen-newborn-admission" class="screen">
       <h2 class="screen-title">Newborn Admission H&P</h2>
-      <textarea class="template-area" id="text-newborn-admission">
-[NEWBORN ADMISSION H&P - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-newborn-admission')">Copy to Clipboard</button>
+
+      <!-- ===== IDENTIFICATION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Identification</h3>
+
+        <div class="field-row">
+          <label class="field-label">Baby of</label>
+          <input class="field-input" type="text" id="na-parent" placeholder="e.g. Baby of Jane Smith" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Date of Birth</label>
+          <input class="field-input" type="text" id="na-dob" placeholder="e.g. 2026-05-01" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Time of Birth</label>
+          <input class="field-input" type="text" id="na-tob" placeholder="e.g. 14:32" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age</label>
+          <input class="field-input" type="text" id="na-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Sex</label>
+          <select class="field-select" id="na-sex">
+            <option value="">-- Select --</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Sex not yet assigned</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Birth Weight (g)</label>
+          <input class="field-input" type="text" id="na-weight" placeholder="e.g. 3420g" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Apgar Scores</label>
+          <input class="field-input" type="text" id="na-apgars" placeholder="e.g. 8 at 1 min, 9 at 5 min" />
+        </div>
+      </section>
+
+      <!-- ===== MATERNAL HISTORY ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Maternal History</h3>
+
+        <div class="field-row">
+          <label class="field-label">Maternal Age/GP</label>
+          <input class="field-input" type="text" id="na-maternal-gp" placeholder="e.g. 28 year old G2P2" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Status</label>
+          <select class="field-select" id="na-gbs">
+            <option value="">-- Select --</option>
+            <option>Negative</option>
+            <option>Positive</option>
+            <option>Unknown</option>
+            <option>Pending</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">GBS Antibiotics</label>
+          <select class="field-select" id="na-antibiotics">
+            <option value="">-- Select --</option>
+            <option>Not indicated</option>
+            <option>Adequate coverage given</option>
+            <option>Inadequate coverage</option>
+            <option>Declined by patient</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">ABO/Rh</label>
+          <input class="field-input" type="text" id="na-abo" placeholder="e.g. O+" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Prenatal Care</label>
+          <select class="field-select" id="na-pnc">
+            <option value="">-- Select --</option>
+            <option>Adequate prenatal care</option>
+            <option>Limited prenatal care</option>
+            <option>No prenatal care</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Pregnancy Complications</label>
+          <input class="field-input" type="text" id="na-preg-complications" placeholder="e.g. None, or GDM, PIH" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Perinatal Complications</label>
+          <input
+            class="field-input"
+            type="text"
+            id="na-perinatal-complications"
+            placeholder="e.g. None, or prolonged ROM, meconium"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Mode of Delivery</label>
+          <select class="field-select" id="na-mode">
+            <option value="">-- Select --</option>
+            <option>Spontaneous vaginal delivery</option>
+            <option>Assisted vaginal delivery - vacuum</option>
+            <option>Assisted vaginal delivery - forceps</option>
+            <option>Caesarean section - emergency</option>
+            <option>Caesarean section - elective</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Membranes</label>
+          <select class="field-select" id="na-membranes">
+            <option value="">-- Select --</option>
+            <option>Spontaneous rupture - clear fluid</option>
+            <option>Artificial rupture - clear fluid</option>
+            <option>Ruptured - meconium stained</option>
+            <option>Intact until delivery</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">ROM to Delivery</label>
+          <input class="field-input" type="text" id="na-rom-duration" placeholder="e.g. 4 hours" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Maternal Medications in Pregnancy</label>
+          <input class="field-input" type="text" id="na-meds" placeholder="e.g. PNV, iron, or None significant" />
+        </div>
+      </section>
+
+      <!-- ===== IMMEDIATE NEWBORN CARE ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Immediate Newborn Care</h3>
+
+        <div class="field-row">
+          <label class="field-label">Delayed Cord Clamping</label>
+          <select class="field-select" id="na-dcc">
+            <option value="">-- Select --</option>
+            <option>Yes - greater than 60 seconds</option>
+            <option>Yes - until cord stopped pulsating</option>
+            <option>Early clamping - clinical indication</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Skin to Skin</label>
+          <select class="field-select" id="na-sts">
+            <option value="">-- Select --</option>
+            <option>Immediate skin to skin achieved</option>
+            <option>Delayed skin to skin - clinical indication</option>
+            <option>Skin to skin with support person</option>
+            <option>Not achieved</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Resuscitation</label>
+          <select class="field-select" id="na-resus">
+            <option value="">-- Select --</option>
+            <option>None required - vigorous at birth</option>
+            <option>Stimulation and drying</option>
+            <option>Supplemental oxygen</option>
+            <option>Positive pressure ventilation</option>
+            <option>PPV and chest compressions</option>
+            <option>Full resuscitation - medications given</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Resuscitation Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="na-resus-details"
+            placeholder="Details if resuscitation required"
+          />
+        </div>
+
+        <!-- Newborn care checkboxes -->
+        <div class="field-row">
+          <label class="field-label">Newborn Care Completed</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="na-vitk" />
+              Vitamin K 1mg IM administered
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="na-nms" />
+              Newborn Metabolic Screen (NMS)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="na-hearing" />
+              Newborn Hearing Screen (EHDI)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="na-jaundice" />
+              Jaundice Screening (TCB/TSB)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="na-cchd" />
+              CCHD Screen
+            </label>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Screening Details</label>
+          <input
+            class="field-input"
+            type="text"
+            id="na-screening-details"
+            placeholder="e.g. NMS sent, hearing screen passed bilaterally, TCB 142"
+          />
+        </div>
+      </section>
+
+      <!-- ===== PHYSICAL EXAMINATION ===== -->
+      <!-- Pre-populated with normal findings - edit as needed -->
+      <section class="note-section">
+        <h3 class="section-title">Physical Examination</h3>
+        <p class="section-subtitle-small">Pre-populated with normal findings — edit as needed</p>
+
+        <div class="field-row">
+          <label class="field-label">Vitals</label>
+          <input class="field-input" type="text" id="na-vitals" placeholder="e.g. HR 142, RR 48, Temp 36.8, SpO2 98%" />
+        </div>
+
+        <!-- Pre-populated textarea with normal newborn exam findings -->
+        <!-- Edit directly in the field - text is real content not placeholder -->
+        <textarea class="template-area" id="na-exam">
+General: Well-appearing newborn, vigorous cry, no distress.
+HEENT: Normocephalic. No caput or cephalohematoma.
+  Anterior fontanelle soft and flat. Sutures mobile.
+  Eyes: No subconjunctival hemorrhage.
+  Ears: Normal set and shape.
+  Oropharynx: Palate intact. No cleft. Tongue normal.
+Neck: Supple, no masses, normal range of motion. Clavicles palpate intact.
+Chest: Equal rise bilaterally. No retractions.
+CVS: Normal S1 S2. No murmur. Femoral and brachial pulses palpable bilaterally.
+Resp: Clear to auscultation bilaterally. No adventitious sounds.
+Abdomen: Soft, non-distended, with normal bowel sounds. No organomegaly. Cord intact.
+GU: Normal [male/female] genitalia. [Testes descended bilaterally.]
+MSK: Full range of motion all limbs. No fractures appreciated or suspected.
+  Hips: Negative Barlow and Ortolani bilaterally.
+  Spine: Straight. No sacral dimple.
+Neuro: Normal tone. Moro, grasp, and suck reflexes present.
+Skin: Pink, well-perfused. No rashes or birthmarks.</textarea
+        >
+      </section>
+
+      <!-- ===== FEEDING ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Feeding</h3>
+
+        <div class="field-row">
+          <label class="field-label">Feeding Type</label>
+          <select class="field-select" id="na-feeding-type">
+            <option value="">-- Select --</option>
+            <option>Exclusively breastfeeding</option>
+            <option>Exclusively formula feeding</option>
+            <option>Combination feeding</option>
+            <option>Expressed breast milk</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Feeding Course</label>
+          <textarea
+            class="field-textarea"
+            id="na-feeding-details"
+            placeholder="e.g. Latched well at birth, feeding every 2-3h, good transfer noted..."
+          ></textarea>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Void</label>
+          <select class="field-select" id="na-void">
+            <option value="">-- Select --</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Meconium</label>
+          <select class="field-select" id="na-mec">
+            <option value="">-- Select --</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="na-other-notes"
+            placeholder="Any additional clinical details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="newborn-admission-clear-btn" onclick="clearNewbornAdmission()">Clear All</button>
+      <button class="copy-btn" onclick="copyNewbornAdmission()">Copy Note to Clipboard</button>
     </main>
 
     <!-- NEWBORN DISCHARGE -->
