@@ -282,3 +282,143 @@ function clearTriageNote() {
 document.addEventListener("DOMContentLoaded", () => {
   navigateTo("screen-home");
 });
+
+// ===== LABOUR PROGRESS NOTE =====
+
+// Tracks monitoring type for progress note independently from triage note
+let progressMonitoringType = "ia";
+
+// setProgressMonitoringType() - same toggle pattern as triage note
+// but uses progress note specific element ids (p- prefix)
+function setProgressMonitoringType(type) {
+  progressMonitoringType = type;
+
+  const iaFields = document.getElementById("p-ia-fields");
+  const cefmFields = document.getElementById("p-cefm-fields");
+  const iaBtn = document.getElementById("p-monitor-ia");
+  const cefmBtn = document.getElementById("p-monitor-cefm");
+
+  if (type === "ia") {
+    iaFields.style.display = "block";
+    cefmFields.style.display = "none";
+    iaBtn.classList.add("active");
+    cefmBtn.classList.remove("active");
+  } else {
+    iaFields.style.display = "none";
+    cefmFields.style.display = "block";
+    cefmBtn.classList.add("active");
+    iaBtn.classList.remove("active");
+  }
+}
+
+// copyProgressNote() - assembles progress note fields into
+// a clean SOAP formatted note and copies to clipboard
+function copyProgressNote() {
+  // Same helper function as triage note - reads field by id,
+  // returns fallback if empty
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  // Build the fetal assessment section based on monitoring type
+  // This is pulled out into its own variable to keep the note
+  // template readable
+  const fetalAssessment =
+    progressMonitoringType === "ia"
+      ? `FHR: ${val("p-fhr")} baseline | Monitoring: Intermittent Auscultation
+Rhythm: ${val("p-rhythm")} | Accelerations: ${val("p-ia-accels")} | Decelerations: ${val("p-ia-decels")}
+FHR Classification: ${val("p-ia-class")}`
+      : `FHR: ${val("p-fhr")} baseline | Monitoring: cEFM
+Variability: ${val("p-variability")} | Accelerations: ${val("p-accels")} | Decelerations: ${val("p-decels")}
+FHR Classification: ${val("p-fhr-class")}`;
+
+  const note = `LABOUR PROGRESS NOTE
+${"=".repeat(40)}
+
+${val("p-gp")} at ${val("p-ga")} — ${val("p-labour-state")}
+
+SUBJECTIVE
+Pain/Coping: ${val("p-coping")}
+Contractions: ${val("p-ctx-reported")}
+Fetal Movement: ${val("p-fm")}${val("p-subjective-other") !== "___" ? "\nOther: " + val("p-subjective-other") : ""}
+
+OBJECTIVE
+Vitals: BP ${val("p-bp")} | HR ${val("p-hr")} | Temp ${val("p-temp")}
+Contractions: ${val("p-ctx-exam")}
+${fetalAssessment}
+Cervical Exam: ${val("p-dilation")} dilated | Station: ${val("p-station")}${val("p-cx-details") !== "___" ? " | " + val("p-cx-details") : ""}
+Membranes: ${val("p-membranes")}
+Fetal Position: ${val("p-position")}
+
+ASSESSMENT
+Progress: ${val("p-progress")}
+Fetal Status: ${val("p-fetal-status")}
+Impression: ${val("p-impression")}
+
+PLAN
+Analgesia: ${val("p-analgesia")}${val("p-interventions") !== "___" ? "\nInterventions: " + val("p-interventions") : ""}
+${val("p-reassess")}
+${val("p-informed-choice") !== "___" ? "\nInformed Choice: " + val("p-informed-choice") : ""}
+${val("p-other-notes") !== "___" ? "\nOTHER NOTES\n" + val("p-other-notes") : ""}
+
+${"=".repeat(40)}
+Registered Midwife`;
+
+  navigator.clipboard
+    .writeText(note)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-progress .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Note to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearProgressNote() - two-tap clear pattern
+// identical to triage clear but targets progress note fields
+let clearProgressPending = false;
+
+function clearProgressNote() {
+  const btn = document.getElementById("progress-clear-btn");
+
+  if (!clearProgressPending) {
+    // First tap - ask for confirmation
+    clearProgressPending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearProgressPending) {
+        clearProgressPending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    // Second tap - clear all fields
+    clearProgressPending = false;
+
+    const inputs = document.querySelectorAll("#screen-progress .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-progress .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-progress .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    // Reset monitoring toggle back to IA default
+    setProgressMonitoringType("ia");
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}

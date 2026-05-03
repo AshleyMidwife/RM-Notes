@@ -583,10 +583,328 @@
     <!-- LABOUR PROGRESS NOTE -->
     <main id="screen-progress" class="screen">
       <h2 class="screen-title">Labour Progress Note</h2>
-      <textarea class="template-area" id="text-progress">
-[LABOUR PROGRESS NOTE - coming soon]
-      </textarea>
-      <button class="copy-btn" onclick="copyTemplate('text-progress')">Copy to Clipboard</button>
+
+      <!-- ===== ID SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Identification</h3>
+
+        <div class="field-row">
+          <label class="field-label">Gravida/Para</label>
+          <input class="field-input" type="text" id="p-gp" placeholder="e.g. G2P1" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Gestational Age</label>
+          <input class="field-input" type="text" id="p-ga" placeholder="e.g. 39w2d" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Labour State</label>
+          <select class="field-select" id="p-labour-state">
+            <option value="">-- Select --</option>
+            <option>Latent/early labour</option>
+            <option>Active labour</option>
+            <option>Advanced active labour</option>
+            <option>Second stage</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ===== SUBJECTIVE SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Subjective</h3>
+
+        <div class="field-row">
+          <label class="field-label">Pain/Coping</label>
+          <select class="field-select" id="p-coping">
+            <option value="">-- Select --</option>
+            <option>Coping well, no analgesia requested</option>
+            <option>Coping with support, no analgesia requested</option>
+            <option>Requesting analgesia</option>
+            <option>Analgesia in place, comfortable</option>
+            <option>Analgesia in place, inadequate relief</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Contraction Pattern</label>
+          <input class="field-input" type="text" id="p-ctx-reported" placeholder="e.g. q3min x 60s" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Fetal Movement</label>
+          <select class="field-select" id="p-fm">
+            <option value="">-- Select --</option>
+            <option>Normal/present</option>
+            <option>Reduced</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Other</label>
+          <input class="field-input" type="text" id="p-subjective-other" placeholder="Any other subjective findings" />
+        </div>
+      </section>
+
+      <!-- ===== OBJECTIVE SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Objective</h3>
+
+        <!-- Vitals inline -->
+        <div class="field-row">
+          <label class="field-label">BP</label>
+          <input class="field-input" type="text" id="p-bp" placeholder="e.g. 118/72" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">HR</label>
+          <input class="field-input" type="text" id="p-hr" placeholder="e.g. 82" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Temp</label>
+          <input class="field-input" type="text" id="p-temp" placeholder="e.g. 36.8" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Contractions</label>
+          <input class="field-input" type="text" id="p-ctx-exam" placeholder="e.g. 4 in 10 min, strong by palpation" />
+        </div>
+      </section>
+
+      <!-- ===== FETAL ASSESSMENT SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Fetal Assessment</h3>
+
+        <div class="field-row">
+          <label class="field-label">FHR Baseline</label>
+          <input class="field-input" type="text" id="p-fhr" placeholder="e.g. 140 bpm" />
+        </div>
+
+        <!-- IA/cEFM toggle - same pattern as triage note -->
+        <div class="field-row">
+          <label class="field-label">Monitoring Type</label>
+          <div class="segmented-control">
+            <button class="segment active" id="p-monitor-ia" onclick="setProgressMonitoringType('ia')">IA</button>
+            <button class="segment" id="p-monitor-cefm" onclick="setProgressMonitoringType('cefm')">cEFM</button>
+          </div>
+        </div>
+
+        <!-- IA fields - visible by default -->
+        <div id="p-ia-fields">
+          <div class="field-row">
+            <label class="field-label">Rhythm</label>
+            <select class="field-select" id="p-rhythm">
+              <option value="">-- Select --</option>
+              <option>Regular</option>
+              <option>Irregular</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Accelerations</label>
+            <select class="field-select" id="p-ia-accels">
+              <option value="">-- Select --</option>
+              <option>Heard</option>
+              <option>Not heard</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Decelerations</label>
+            <select class="field-select" id="p-ia-decels">
+              <option value="">-- Select --</option>
+              <option>Not heard</option>
+              <option>Heard</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Classification</label>
+            <select class="field-select" id="p-ia-class">
+              <option value="">-- Select --</option>
+              <option>Normal</option>
+              <option>Abnormal</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- cEFM fields - hidden by default -->
+        <div id="p-cefm-fields" style="display: none">
+          <div class="field-row">
+            <label class="field-label">Variability</label>
+            <select class="field-select" id="p-variability">
+              <option value="">-- Select --</option>
+              <option>Absent</option>
+              <option>Minimal</option>
+              <option>Moderate</option>
+              <option>Marked</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Accelerations</label>
+            <select class="field-select" id="p-accels">
+              <option value="">-- Select --</option>
+              <option>Present</option>
+              <option>Absent</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Decelerations</label>
+            <select class="field-select" id="p-decels">
+              <option value="">-- Select --</option>
+              <option>Absent</option>
+              <option>Early decelerations</option>
+              <option>Variable decelerations</option>
+              <option>Late decelerations</option>
+              <option>Prolonged deceleration</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <label class="field-label">Classification</label>
+            <select class="field-select" id="p-fhr-class">
+              <option value="">-- Select --</option>
+              <option>Normal</option>
+              <option>Atypical</option>
+              <option>Abnormal</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CERVICAL EXAM SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Cervical Exam</h3>
+
+        <div class="field-row">
+          <label class="field-label">Dilation</label>
+          <input class="field-input" type="text" id="p-dilation" placeholder="e.g. 6 cm" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Station</label>
+          <input class="field-input" type="text" id="p-station" placeholder="e.g. -1" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Details</label>
+          <input class="field-input" type="text" id="p-cx-details" placeholder="e.g. fully effaced, anterior, soft" />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Membranes</label>
+          <select class="field-select" id="p-membranes">
+            <option value="">-- Select --</option>
+            <option>Intact</option>
+            <option>Ruptured - clear fluid</option>
+            <option>Ruptured - bloody fluid</option>
+            <option>Ruptured - meconium stained</option>
+            <option>Not assessed</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Fetal Position</label>
+          <input class="field-input" type="text" id="p-position" placeholder="e.g. LOA, OA" />
+        </div>
+      </section>
+
+      <!-- ===== ASSESSMENT SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Assessment</h3>
+
+        <div class="field-row">
+          <label class="field-label">Progress</label>
+          <select class="field-select" id="p-progress">
+            <option value="">-- Select --</option>
+            <option>Progressing normally</option>
+            <option>Slow progress</option>
+            <option>Arrest of progress</option>
+            <option>Rapid progress</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Fetal Status</label>
+          <select class="field-select" id="p-fetal-status">
+            <option value="">-- Select --</option>
+            <option>Reassuring</option>
+            <option>Atypical - continue monitoring</option>
+            <option>Non-reassuring - escalating care</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Impression</label>
+          <input class="field-input" type="text" id="p-impression" placeholder="e.g. Active labour, progressing well" />
+        </div>
+      </section>
+
+      <!-- ===== PLAN SECTION ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Plan</h3>
+
+        <div class="field-row">
+          <label class="field-label">Analgesia</label>
+          <input
+            class="field-input"
+            type="text"
+            id="p-analgesia"
+            placeholder="e.g. Hydrotherapy, N2O, epidural in situ"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Interventions</label>
+          <input
+            class="field-input"
+            type="text"
+            id="p-interventions"
+            placeholder="e.g. AROM performed, oxytocin commenced"
+          />
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Reassessment</label>
+          <select class="field-select" id="p-reassess">
+            <option value="">-- Select --</option>
+            <option>Reassess in 1 hour</option>
+            <option>Reassess in 2 hours</option>
+            <option>Reassess in 3 hours</option>
+            <option>Reassess as clinically indicated</option>
+            <option>Continuous monitoring in progress</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <label class="field-label">Informed Choice Discussion</label>
+          <textarea
+            class="field-textarea"
+            id="p-informed-choice"
+            placeholder="e.g. Options discussed, questions answered, patient agreeable to plan."
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===== OTHER NOTES ===== -->
+      <section class="note-section">
+        <h3 class="section-title">Other Notes</h3>
+        <div class="field-row">
+          <label class="field-label">Additional Notes</label>
+          <textarea
+            class="field-textarea"
+            id="p-other-notes"
+            placeholder="Any additional clinical details not captured above..."
+          ></textarea>
+        </div>
+      </section>
+
+      <button class="clear-btn" id="progress-clear-btn" onclick="clearProgressNote()">Clear All</button>
+      <button class="copy-btn" onclick="copyProgressNote()">Copy Note to Clipboard</button>
     </main>
 
     <!-- DELIVERY NOTE -->
