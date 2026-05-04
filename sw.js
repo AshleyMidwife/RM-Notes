@@ -5,7 +5,7 @@
 
 // Cache name — bump this version string whenever you deploy significant changes
 // This tells the browser to throw out the old cache and fetch fresh files
-const CACHE_NAME = "rm-notes-v1";
+const CACHE_NAME = "rm-notes-v2";
 
 // Files to cache on install — everything the app needs to run offline
 const FILES_TO_CACHE = [
