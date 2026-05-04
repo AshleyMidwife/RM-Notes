@@ -1321,3 +1321,24 @@ function clearTransferNote() {
     btn.classList.remove("confirming");
   }
 }
+
+// ===== DISCLAIMER =====
+
+// dismissDisclaimer() - hides the disclaimer overlay and stores
+// the dismissal in localStorage so it doesn't show again
+function dismissDisclaimer() {
+  document.getElementById("disclaimer-overlay").classList.add("hidden");
+  localStorage.setItem("rm-notes-disclaimer-accepted", "true");
+}
+
+// checkDisclaimer() - runs on page load to decide whether
+// to show the disclaimer or not
+function checkDisclaimer() {
+  const accepted = localStorage.getItem("rm-notes-disclaimer-accepted");
+  if (accepted) {
+    document.getElementById("disclaimer-overlay").classList.add("hidden");
+  }
+}
+
+// Run disclaimer check when page loads
+window.addEventListener("load", checkDisclaimer);

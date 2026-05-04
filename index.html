@@ -22,6 +22,44 @@
   </head>
 
   <body>
+    <!-- ===== DISCLAIMER POPUP ===== -->
+    <div id="disclaimer-overlay" class="disclaimer-overlay">
+      <div class="disclaimer-box">
+        <h2 class="disclaimer-title">RM Notes</h2>
+        <p class="disclaimer-subtitle">Midwifery Documentation Templates</p>
+
+        <div class="disclaimer-body">
+          <p>These templates are designed to support registered midwives in clinical documentation.</p>
+
+          <p><strong>Important:</strong></p>
+          <ul>
+            <li>These templates are documentation aids, not substitutes for professional judgment</li>
+            <li>All clinical decisions remain the sole responsibility of the treating clinician</li>
+            <li>Templates should be adapted to local guidelines and site-specific requirements</li>
+            <li>These tools are not a substitute for formal clinical training or supervision</li>
+          </ul>
+
+          <p>
+            <strong>Liability:</strong><br />
+            These tools are provided as-is, without warranty of any kind. The developer accepts no liability for
+            clinical decisions made using these tools.
+          </p>
+
+          <p>
+            <strong>Feedback:</strong><br />
+            Found an error or have a suggestion? Visit
+            <a href="https://github.com/AshleyMidwife" target="_blank">github.com/AshleyMidwife</a>
+          </p>
+
+          <p class="disclaimer-acknowledgement">
+            By using this app you acknowledge that you are a regulated health professional or supervised trainee using
+            this tool in a professional capacity.
+          </p>
+        </div>
+
+        <button class="disclaimer-btn" onclick="dismissDisclaimer()">I Understand — Continue to App</button>
+      </div>
+    </div>
     <!-- ===== HEADER ===== -->
     <!-- Appears on every screen, contains back button and app title -->
     <header class="app-header">
@@ -31,6 +69,7 @@
         <!-- Left arrow character -->
       </button>
       <h1 class="app-title">RM Notes</h1>
+      <button class="about-btn" onclick="navigateTo('screen-about')">About</button>
     </header>
 
     <!-- ===== HOME SCREEN ===== -->
@@ -3067,6 +3106,63 @@ Skin: Pink, well-perfused. No rashes or birthmarks.</textarea>
 
       <button class="clear-btn" id="transfer-clear-btn" onclick="clearTransferNote()">Clear All</button>
       <button class="copy-btn" onclick="copyTransferNote()">Copy Note to Clipboard</button>
+    </main>
+
+    <!-- ABOUT SCREEN -->
+    <main id="screen-about" class="screen">
+      <h2 class="screen-title">About RM Notes</h2>
+
+      <section class="note-section">
+        <h3 class="section-title">Midwifery Documentation Templates</h3>
+        <p style="color: #f1f5f9; line-height: 1.6; margin-bottom: 12px">
+          These templates are designed to support registered midwives in clinical documentation.
+        </p>
+
+        <p style="color: #f59e0b; font-weight: 700; margin-bottom: 4px">Important</p>
+        <ul style="color: #f1f5f9; line-height: 1.8; margin-left: 16px; margin-bottom: 12px">
+          <li>These templates are documentation aids, not substitutes for professional judgment</li>
+          <li>All clinical decisions remain the sole responsibility of the treating clinician</li>
+          <li>Templates should be adapted to local guidelines and site-specific requirements</li>
+          <li>These tools are not a substitute for formal clinical training or supervision</li>
+        </ul>
+
+        <p style="color: #f59e0b; font-weight: 700; margin-bottom: 4px">Liability</p>
+        <p style="color: #f1f5f9; line-height: 1.6; margin-bottom: 12px">
+          These tools are provided as-is, without warranty of any kind. The developer accepts no liability for clinical
+          decisions made using these tools.
+        </p>
+
+        <p style="color: #f59e0b; font-weight: 700; margin-bottom: 4px">Feedback</p>
+        <p style="color: #f1f5f9; line-height: 1.6; margin-bottom: 12px">
+          Found an error or have a suggestion? Visit
+          <a href="https://github.com/AshleyMidwife" target="_blank" style="color: #f59e0b">github.com/AshleyMidwife</a>
+        </p>
+
+        <p style="color: #94a3b8; font-style: italic; line-height: 1.6; margin-top: 16px">
+          By using this app you acknowledge that you are a regulated health professional or supervised trainee using
+          this tool in a professional capacity.
+        </p>
+      </section>
+
+      <section class="note-section">
+        <h3 class="section-title">License</h3>
+        <p style="color: #f1f5f9; line-height: 1.6">
+          RM Notes is open source software released under the MIT License.<br />
+          <a href="https://github.com/AshleyMidwife/RM-Notes" target="_blank" style="color: #f59e0b"
+            >github.com/AshleyMidwife/RM-Notes</a
+          >
+        </p>
+      </section>
+
+      <section class="note-section">
+        <h3 class="section-title">Companion App</h3>
+        <p style="color: #f1f5f9; line-height: 1.6">
+          Looking for clinical calculators? Check out RM Tools:<br />
+          <a href="https://ashleymidwife.github.io/RM-Tools/" target="_blank" style="color: #f59e0b"
+            >ashleymidwife.github.io/RM-Tools</a
+          >
+        </p>
+      </section>
     </main>
 
     <!-- Links to our JavaScript file - always at bottom of body -->
