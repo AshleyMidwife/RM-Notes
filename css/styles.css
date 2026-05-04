@@ -604,3 +604,64 @@ body {
   background-color: #3a3a5c;
   color: #d97706;
 }
+
+/* ===== ADD ENTRY BUTTON ===== */
+/* Used for the "Add Pregnancy" button in OB history */
+.add-entry-btn {
+  width: 100%;
+  background-color: transparent;
+  border: 1px dashed #3a3a5c;
+  border-radius: 12px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.add-entry-btn:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+/* ===== OB HISTORY ENTRY ===== */
+/* Each pregnancy entry added dynamically by JavaScript */
+.ob-entry {
+  background-color: #1e1e2e;
+  border: 1px solid #3a3a5c;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+/* Remove button sits in top right of each entry */
+.ob-entry-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.ob-entry-remove:hover {
+  color: #ef4444;
+}
+
+.ob-entry .field-row {
+  margin-bottom: 8px;
+}
+
+.ob-entry .field-row:last-child {
+  margin-bottom: 0;
+}

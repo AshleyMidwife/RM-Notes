@@ -1340,5 +1340,229 @@ function checkDisclaimer() {
   }
 }
 
+// ===== CONSULT LETTER =====
+
+// Tracks how many OB history entries have been added
+// Used to give each entry a unique ID
+let obEntryCount = 0;
+
+// addOBEntry() - dynamically adds a new pregnancy entry to the OB history section
+// Each entry has its own fields and a remove button
+function addOBEntry() {
+  obEntryCount++;
+  const id = obEntryCount; // Unique ID for this entry's fields
+
+  // Create a new div for this entry
+  const entry = document.createElement("div");
+  entry.className = "ob-entry";
+  entry.id = `ob-entry-${id}`;
+
+  // Build the HTML for this entry
+  // Each field gets a unique ID using the entry number
+  entry.innerHTML = `
+    <!-- Remove button in top right corner -->
+    <button class="ob-entry-remove" onclick="removeOBEntry(${id})" aria-label="Remove">✕</button>
+
+    <div class="field-row">
+      <label class="field-label">Year</label>
+      <input class="field-input" type="text" id="ob-year-${id}" placeholder="e.g. 2021" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Outcome</label>
+      <select class="field-select" id="ob-outcome-${id}">
+        <option value="">-- Select --</option>
+        <option>SVD</option>
+        <option>Caesarean section</option>
+        <option>Assisted vaginal delivery</option>
+        <option>Spontaneous abortion</option>
+        <option>Therapeutic abortion</option>
+        <option>Ectopic pregnancy</option>
+        <option>Stillbirth</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Gestational Age</label>
+      <input class="field-input" type="text" id="ob-ga-${id}"
+        placeholder="e.g. 39+2 weeks, or 8 weeks" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Infant Status</label>
+      <select class="field-select" id="ob-infant-${id}">
+        <option value="">-- Select --</option>
+        <option>N/A</option>
+        <option>Living and well</option>
+        <option>Neonatal death</option>
+        <option>Infant death</option>
+        <option>Stillbirth</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Notes</label>
+      <input class="field-input" type="text" id="ob-notes-${id}"
+        placeholder="Any relevant details" />
+    </div>
+  `;
+
+  // Add the new entry to the entries container
+  document.getElementById("cl-ob-history-entries").appendChild(entry);
+}
+
+// removeOBEntry() - removes a specific OB history entry by its ID
+function removeOBEntry(id) {
+  const entry = document.getElementById(`ob-entry-${id}`);
+  if (entry) entry.remove();
+}
+
+// getOBHistory() - assembles all OB history entries into formatted text
+// Called by copyConsultLetter() to build the OB history section
+function getOBHistory() {
+  const entries = document.querySelectorAll(".ob-entry");
+
+  // If no entries added return a placeholder
+  if (entries.length === 0) return "Not documented";
+
+  // Build a formatted string from each entry
+  const lines = [];
+  entries.forEach((entry) => {
+    const id = entry.id.replace("ob-entry-", "");
+    const year = document.getElementById(`ob-year-${id}`)?.value.trim() || "___";
+    const outcome = document.getElementById(`ob-outcome-${id}`)?.value || "___";
+    const ga = document.getElementById(`ob-ga-${id}`)?.value.trim() || "___";
+    const infant = document.getElementById(`ob-infant-${id}`)?.value || "";
+    const notes = document.getElementById(`ob-notes-${id}`)?.value.trim() || "";
+
+    // Build each line — infant status and notes only appear if filled in
+    let line = `${year} — ${outcome} at ${ga}`;
+    if (infant && infant !== "N/A") line += `, ${infant}`;
+    if (notes) line += `. ${notes}`;
+    lines.push(line);
+  });
+
+  return lines.join("\n");
+}
+
+// copyConsultLetter() - assembles all consult letter fields
+// into a formatted letter and copies to clipboard
+function copyConsultLetter() {
+  function val(id, fallback = "___") {
+    const el = document.getElementById(id);
+    if (!el) return fallback;
+    return el.value.trim() || fallback;
+  }
+
+  const obHistory = getOBHistory();
+
+  const letter = `TO: ${val("cl-to")}
+FROM: ${val("cl-from")}
+DATE: ${val("cl-date")}
+RE: ${val("cl-re")}
+${"=".repeat(40)}
+
+Dear ${val("cl-to")},
+
+I am writing to request a ${val("cl-request-type")} regarding ${val("cl-referral-type")} for ${val("cl-name")}, ${val("cl-brief-reason")}.
+
+${val("cl-name")} is a ${val("cl-age")}-year-old ${val("cl-gp")} at ${val("cl-ga")} weeks gestation. She is ${val("cl-abo")}, ${val("cl-serology")}. Her EDD is ${val("cl-edd")}, ${val("cl-dating")}.${val("cl-serology-details") !== "___" ? " " + val("cl-serology-details") + "." : ""}
+
+REASON FOR REFERRAL
+${val("cl-referral-details")}${val("cl-labs") !== "___" ? "\n\nRelevant Labs:\n" + val("cl-labs") : ""}${val("cl-imaging") !== "___" ? "\n\nRelevant Imaging:\n" + val("cl-imaging") : ""}
+
+CURRENT PREGNANCY
+${val("cl-current-pregnancy")}
+
+OBSTETRICAL HISTORY
+${obHistory}
+
+MEDICAL HISTORY
+${val("cl-pmhx")}
+
+SURGICAL HISTORY
+${val("cl-pshx")}
+
+ALLERGIES AND MEDICATIONS
+Allergies: ${val("cl-allergies")}
+Medications: ${val("cl-meds")}
+
+FAMILY HISTORY
+${val("cl-fhx")}
+
+PSYCHOSOCIAL HISTORY
+${val("cl-occupation")}
+${val("cl-social")}
+Mental Health: ${val("cl-mh")}
+Substance Use: ${val("cl-substances")}
+
+${val("cl-name")} ${val("cl-consent")}.${val("cl-preferences") !== "___" ? " She is " + val("cl-preferences") + "." : ""}
+
+${val("cl-closing")}
+${val("cl-other-notes") !== "___" ? "\nAdditional Notes:\n" + val("cl-other-notes") : ""}`;
+
+  navigator.clipboard
+    .writeText(letter)
+    .then(() => {
+      const copyBtn = document.querySelector("#screen-consult .copy-btn");
+      copyBtn.textContent = "Copied! ✓";
+      copyBtn.classList.add("copied");
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Letter to Clipboard";
+        copyBtn.classList.remove("copied");
+      }, 2000);
+    })
+    .catch(() => {
+      alert("Copy failed - please try again");
+    });
+}
+
+// clearConsultLetter() - two-tap clear pattern
+// Also removes all dynamically added OB history entries
+let clearConsultPending = false;
+
+function clearConsultLetter() {
+  const btn = document.getElementById("consult-clear-btn");
+
+  if (!clearConsultPending) {
+    clearConsultPending = true;
+    btn.textContent = "Confirm Clear?";
+    btn.classList.add("confirming");
+
+    setTimeout(() => {
+      if (clearConsultPending) {
+        clearConsultPending = false;
+        btn.textContent = "Clear All";
+        btn.classList.remove("confirming");
+      }
+    }, 3000);
+  } else {
+    clearConsultPending = false;
+
+    const inputs = document.querySelectorAll("#screen-consult .field-input");
+    inputs.forEach((input) => (input.value = ""));
+
+    const selects = document.querySelectorAll("#screen-consult .field-select");
+    selects.forEach((select) => (select.selectedIndex = 0));
+
+    const textareas = document.querySelectorAll("#screen-consult .field-textarea");
+    textareas.forEach((textarea) => (textarea.value = ""));
+
+    // Remove all dynamically added OB history entries
+    document.getElementById("cl-ob-history-entries").innerHTML = "";
+
+    // Reset the closing to default text
+    document.getElementById("cl-closing").value =
+      "I have included [patient name]'s prenatal records, as well as all current relevant labs and imaging studies. I am happy to answer any questions you may have regarding this client. I look forward to your recommendations for care.\n\nWith warm regards,";
+
+    // Reset entry counter
+    obEntryCount = 0;
+
+    btn.textContent = "Clear All";
+    btn.classList.remove("confirming");
+  }
+}
+
 // Run disclaimer check when page loads
 window.addEventListener("load", checkDisclaimer);

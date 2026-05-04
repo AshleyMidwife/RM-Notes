@@ -120,6 +120,11 @@
           <span class="tool-icon">🔄</span>
           <span class="tool-label">Transfer of Care</span>
         </button>
+
+        <button class="tool-btn" onclick="navigateTo('screen-consult')">
+          <span class="tool-icon">📨</span>
+          <span class="tool-label">Consult Letter</span>
+        </button>
       </div>
     </main>
 
@@ -3164,6 +3169,325 @@ Skin: Pink, well-perfused. No rashes or birthmarks.</textarea>
         </p>
       </section>
     </main>
+
+<!-- CONSULT LETTER -->
+<main id="screen-consult" class="screen">
+  <h2 class="screen-title">Consultation Request Letter</h2>
+
+  <!-- ===== LETTER HEADER ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Letter Header</h3>
+
+    <div class="field-row">
+      <label class="field-label">To</label>
+      <input class="field-input" type="text" id="cl-to"
+        placeholder="e.g. Dr. Jane Smith, Obstetrics" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">From</label>
+      <input class="field-input" type="text" id="cl-from"
+        placeholder="e.g. Ashley Reid, RM" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Date</label>
+      <input class="field-input" type="text" id="cl-date"
+        placeholder="e.g. 2026-05-01" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Re</label>
+      <input class="field-input" type="text" id="cl-re"
+        placeholder="Patient full name" />
+    </div>
+  </section>
+
+  <!-- ===== OPENING LINE ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Opening</h3>
+
+    <div class="field-row">
+      <label class="field-label">Request Type</label>
+      <select class="field-select" id="cl-request-type">
+        <option value="">-- Select --</option>
+        <option>consultation</option>
+        <option>referral</option>
+        <option>urgent referral</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Referral Type</label>
+      <select class="field-select" id="cl-referral-type">
+        <option value="">-- Select --</option>
+        <optgroup label="Obstetrics">
+          <option>OB — TOLAC eligibility</option>
+          <option>OB — Twin pregnancy</option>
+          <option>OB — Missed abortion</option>
+          <option>OB — Placenta previa/marginal placenta</option>
+          <option>OB — Complex obstetric history</option>
+          <option>OB — Hypertension in pregnancy</option>
+        </optgroup>
+        <optgroup label="Maternal Fetal Medicine">
+          <option>MFM — Fetal anomaly</option>
+          <option>MFM — Uterine abnormality</option>
+          <option>MFM — Suspected accreta</option>
+        </optgroup>
+        <optgroup label="Anaesthesia">
+          <option>Anaesthesia — Scoliosis</option>
+          <option>Anaesthesia — High BMI/epidural planning</option>
+        </optgroup>
+        <optgroup label="Internal Medicine">
+          <option>Internal Medicine — Renal/urological concern</option>
+          <option>Internal Medicine — Gallstones/biliary concern</option>
+        </optgroup>
+        <optgroup label="Pediatrics">
+          <option>Pediatrics — Congenital abnormality</option>
+          <option>Pediatrics — Hyperbilirubinemia</option>
+          <option>Pediatrics — Skin concerns</option>
+          <option>Pediatrics — Poor weight gain</option>
+        </optgroup>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Brief Reason</label>
+      <input class="field-input" type="text" id="cl-brief-reason"
+        placeholder="e.g. significant anemia unresponsive to oral supplementation" />
+    </div>
+  </section>
+
+  <!-- ===== PATIENT IDENTIFICATION ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Patient Identification</h3>
+
+    <div class="field-row">
+      <label class="field-label">Patient Name</label>
+      <input class="field-input" type="text" id="cl-name"
+        placeholder="Patient full name" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Age</label>
+      <input class="field-input" type="text" id="cl-age"
+        placeholder="e.g. 32" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Gravida/Para</label>
+      <input class="field-input" type="text" id="cl-gp"
+        placeholder="e.g. G9P3" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Gestational Age</label>
+      <input class="field-input" type="text" id="cl-ga"
+        placeholder="e.g. 15+4" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">EDD</label>
+      <input class="field-input" type="text" id="cl-edd"
+        placeholder="e.g. May 10, 2026" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Dating Method</label>
+      <select class="field-select" id="cl-dating">
+        <option value="">-- Select --</option>
+        <option>confirmed by first trimester ultrasound</option>
+        <option>confirmed by second trimester ultrasound</option>
+        <option>determined by last menstrual period only</option>
+        <option>determined by ART dates</option>
+        <option>determined by LMP and confirmed by first trimester ultrasound</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">ABO/Rh</label>
+      <input class="field-input" type="text" id="cl-abo"
+        placeholder="e.g. A positive" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Serology</label>
+      <select class="field-select" id="cl-serology">
+        <option value="">-- Select --</option>
+        <option>rubella immune, with otherwise protective serology</option>
+        <option>rubella non-immune, otherwise protective serology</option>
+        <option>notable serology findings - see details</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Serology Details</label>
+      <input class="field-input" type="text" id="cl-serology-details"
+        placeholder="Any notable serology findings" />
+    </div>
+  </section>
+
+  <!-- ===== REASON FOR REFERRAL ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Reason for Referral</h3>
+
+    <div class="field-row">
+      <label class="field-label">Clinical Details</label>
+      <textarea class="field-textarea" id="cl-referral-details"
+        placeholder="Describe the clinical findings, investigations, and timeline that support this referral..."></textarea>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Relevant Labs</label>
+      <textarea class="field-textarea" id="cl-labs"
+        placeholder="e.g. Hgb 96 at 15+3, Ferritin 9, on iron supplementation since 11+3..."></textarea>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Relevant Imaging</label>
+      <input class="field-input" type="text" id="cl-imaging"
+        placeholder="e.g. T1 US concordant, anatomy scan normal, or N/A" />
+    </div>
+  </section>
+
+  <!-- ===== CURRENT PREGNANCY ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Current Pregnancy</h3>
+
+    <div class="field-row">
+      <label class="field-label">Summary</label>
+      <textarea class="field-textarea" id="cl-current-pregnancy"
+        placeholder="e.g. Current pregnancy has been uncomplicated thus far, apart from the above mentioned concern..."></textarea>
+    </div>
+  </section>
+
+  <!-- ===== OBSTETRICAL HISTORY ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Obstetrical History</h3>
+
+    <!-- Dynamic OB history entries - entries added by JavaScript -->
+    <div id="cl-ob-history-entries"></div>
+
+    <!-- Add entry button -->
+    <button class="add-entry-btn" onclick="addOBEntry()">
+      + Add Pregnancy
+    </button>
+  </section>
+
+  <!-- ===== MEDICAL HISTORY ===== -->
+  <section class="note-section">
+    <h3 class="section-title">History</h3>
+
+    <div class="field-row">
+      <label class="field-label">Medical History</label>
+      <textarea class="field-textarea" id="cl-pmhx"
+        placeholder="e.g. Generally healthy, history of anemia." /></textarea>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Surgical History</label>
+      <input class="field-input" type="text" id="cl-pshx"
+        placeholder="e.g. Cesarean section 2011, or Nil significant" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Allergies</label>
+      <input class="field-input" type="text" id="cl-allergies"
+        placeholder="e.g. NKDA" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Medications</label>
+      <textarea class="field-textarea" id="cl-meds"
+        placeholder="e.g. PNV and vitamin C daily, iron supplement 150mg elemental iron every 2-3 days"></textarea>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Family History</label>
+      <input class="field-input" type="text" id="cl-fhx"
+        placeholder="e.g. No significant family history, or relevant findings" />
+    </div>
+  </section>
+
+  <!-- ===== PSYCHOSOCIAL HISTORY ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Psychosocial History</h3>
+
+    <div class="field-row">
+      <label class="field-label">Occupation/Home</label>
+      <input class="field-input" type="text" id="cl-occupation"
+        placeholder="e.g. Works as a nurse, partner is a teacher" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Social History</label>
+      <textarea class="field-textarea" id="cl-social"
+        placeholder="e.g. Reports no social or financial concerns, no history of abuse or trauma disclosed..."></textarea>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Mental Health</label>
+      <input class="field-input" type="text" id="cl-mh"
+        placeholder="e.g. Reports no mental health concerns" />
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Substance Use</label>
+      <input class="field-input" type="text" id="cl-substances"
+        placeholder="e.g. No cigarette, cannabis or other substance use" />
+    </div>
+  </section>
+
+  <!-- ===== CLIENT AWARENESS ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Client Awareness</h3>
+
+    <div class="field-row">
+      <label class="field-label">Consent to Referral</label>
+      <select class="field-select" id="cl-consent">
+        <option value="">-- Select --</option>
+        <option>is aware and consenting to this referral</option>
+        <option>is aware of this referral and has questions - see notes</option>
+        <option>has declined this referral after informed choice discussion</option>
+      </select>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">Client Preferences</label>
+      <input class="field-input" type="text" id="cl-preferences"
+        placeholder="e.g. open to receiving IV iron if a good candidate" />
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Closing</h3>
+
+    <!-- Pre-populated warm closing - editable -->
+    <!-- prettier-ignore -->
+    <textarea class="field-textarea" id="cl-closing">I have included [patient name]'s prenatal records, as well as all current relevant labs and imaging studies. I am happy to answer any questions you may have regarding this client. I look forward to your recommendations for care.
+
+With warm regards,</textarea>
+  </section>
+
+  <!-- ===== OTHER NOTES ===== -->
+  <section class="note-section">
+    <h3 class="section-title">Other Notes</h3>
+    <div class="field-row">
+      <label class="field-label">Additional Notes</label>
+      <textarea class="field-textarea" id="cl-other-notes"
+        placeholder="Any additional details not captured above..."></textarea>
+    </div>
+  </section>
+
+  <button class="clear-btn" id="consult-clear-btn" onclick="clearConsultLetter()">
+    Clear All
+  </button>
+  <button class="copy-btn" onclick="copyConsultLetter()">
+    Copy Letter to Clipboard
+  </button>
+</main>
 
     <!-- Links to our JavaScript file - always at bottom of body -->
     <script src="js/app.js"></script>
